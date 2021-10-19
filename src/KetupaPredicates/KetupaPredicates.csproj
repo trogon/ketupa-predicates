@@ -15,6 +15,10 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <RootNamespace>Trogon.KetupaPredicates</RootNamespace>
+    <AssemblyVersion></AssemblyVersion>
+    <Description>Parsing library to evaluate text predicates</Description>
+    <Version>1.0.1</Version>
+    <PackageId>Trogon.$(AssemblyName)</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
