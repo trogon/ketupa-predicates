@@ -124,6 +124,7 @@
                     "=" => GetAgrumentValue(0, variables) == GetAgrumentValue(1, variables),
                     "OR" => GetAgrumentValue(0, variables) == $"{true}" || GetAgrumentValue(1, variables) == $"{true}",
                     "AND" => GetAgrumentValue(0, variables) == $"{true}" && GetAgrumentValue(1, variables) == $"{true}",
+                    "HasFlag" => HasFlag(variables),
                     _ => false,
                 };
             }
@@ -154,6 +155,23 @@
             }
 
             return argument;
+        }
+
+        /// <summary>
+        /// Checks if first argument has flag indicated by second argument
+        /// </summary>
+        /// <param name="variables">Provided variables</param>
+        /// <returns>True if has flag, otherwise False</returns>
+        public bool HasFlag(IDictionary<string, string> variables)
+        {
+            var valA = GetAgrumentValue(0, variables);
+            var valB = GetAgrumentValue(1, variables);
+            if(int.TryParse(valA, out int enumA) && int.TryParse(valB, out int enumB))
+            {
+                return (enumA & enumB) == enumB;
+            }
+
+            return false;
         }
     }
 }
