@@ -8,7 +8,7 @@ using System.Linq;
 public class ExpressionParserTest
 {
     private const string simplePredicate = "=, 11, 21";
-    private const string complexPredicate = "OR, {=, 11, 21}, {<, 11, 21}";
+    private const string complexPredicate = "OR, {=, 13, 31}, {<, 15, 51}";
 
     [TestMethod]
     public void Test_PredicateExpressionCreate_NotNull()
@@ -46,6 +46,23 @@ public class ExpressionParserTest
 
         // Assert
         Assert.AreEqual("OR", argument);
+    }
+
+    [TestMethod]
+    [DataRow('a', Token.None)]
+    [DataRow(',', Token.ArgumentSeparator)]
+    [DataRow('{', Token.PredicateStart)]
+    [DataRow('}', Token.PredicateEnd)]
+    public void Test_GetToken_TokenReturned(char symbol, Token expectedToken)
+    {
+        // Arrange
+        var parser = new ExpressionParser();
+
+        // Act
+        var token = parser.GetToken(symbol);
+
+        // Assert
+        Assert.AreEqual(expectedToken, token);
     }
 
     [TestMethod]
@@ -116,5 +133,81 @@ public class ExpressionParserTest
         CollectionAssert.Contains(arguments, " 11");
         CollectionAssert.Contains(arguments, " 21");
         Assert.AreEqual(expression.Length + 1, startIndex);
+    }
+
+    [TestMethod]
+    [TestCategory("Complex predicate")]
+    public void TestComplex_GetNextArgument_FirstExpression()
+    {
+        // Arrange
+        var parser = new ExpressionParser();
+
+        // Act
+        var argument = parser.GetNextArgument(complexPredicate, 3);
+
+        // Assert
+        Assert.AreEqual(" {=, 13, 31}", argument);
+    }
+
+    [TestMethod]
+    [TestCategory("Complex predicate")]
+    public void TestComplex_GetNextArgument_SecondExpression()
+    {
+        // Arrange
+        var parser = new ExpressionParser();
+
+        // Act
+        var argument = parser.GetNextArgument(complexPredicate, 13+3);
+
+        // Assert
+        Assert.AreEqual(" {<, 15, 51}", argument);
+    }
+
+    [TestMethod]
+    [DataRow(simplePredicate,false)]
+    [DataRow(complexPredicate, false)]
+    [DataRow($"{{ {simplePredicate}}}", true)]
+    [DataRow($"{{{complexPredicate} }}", true)]
+    public void Test_IsExpression(string text, bool expectedResult)
+    {
+        // Arrange
+        var parser = new ExpressionParser();
+
+        // Act
+        var result = parser.IsExpression(text);
+
+        // Assert
+        Assert.AreEqual(expectedResult, result);
+    }
+
+    [TestMethod]
+    [DataRow("$Hello", true)]
+    [DataRow("{Hello", false)]
+    [DataRow("}Hello", false)]
+    [DataRow(",$ello", false)]
+    public void Test_IsVariable(string text, bool expectedResult)
+    {
+        // Arrange
+        var parser = new ExpressionParser();
+
+        // Act
+        var result = parser.IsVariable(text);
+
+        // Assert
+        Assert.AreEqual(expectedResult, result);
+    }
+
+    [TestMethod]
+    public void Test_TrimExpression_BracketsTrimmed()
+    {
+        // Arrange
+        var expression = "EXP { RE } SS{I}ON";
+        var parser = new ExpressionParser();
+
+        // Act
+        var trimmed = parser.TrimExpression($" {{ {expression}  }}  ");
+
+        // Assert
+        Assert.AreEqual(expression, trimmed);
     }
 }
