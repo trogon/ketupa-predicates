@@ -71,7 +71,14 @@
         /// <returns>True if text is an expression, otherwise False</returns>
         public bool IsExpression(string text)
         {
-            return GetToken(text[0]) == Token.PredicateStart && GetToken(text[^1]) == Token.PredicateEnd;
+            if (!string.IsNullOrEmpty(text))
+            {
+                return GetToken(text[0]) == Token.PredicateStart && GetToken(text[^1]) == Token.PredicateEnd;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -81,7 +88,14 @@
         /// <returns>True if text is a variable, otherwise False</returns>
         public bool IsVariable(string text)
         {
-            return GetToken(text[0]) == Token.Variable;
+            if (!string.IsNullOrEmpty(text))
+            {
+                return GetToken(text[0]) == Token.Variable;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>

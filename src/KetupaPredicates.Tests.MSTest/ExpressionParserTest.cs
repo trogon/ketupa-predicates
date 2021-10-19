@@ -164,6 +164,7 @@ public class ExpressionParserTest
     }
 
     [TestMethod]
+    [DataRow("", false)]
     [DataRow(simplePredicate,false)]
     [DataRow(complexPredicate, false)]
     [DataRow($"{{ {simplePredicate}}}", true)]
@@ -181,6 +182,7 @@ public class ExpressionParserTest
     }
 
     [TestMethod]
+    [DataRow("", false)]
     [DataRow("$Hello", true)]
     [DataRow("{Hello", false)]
     [DataRow("}Hello", false)]
