@@ -86,6 +86,8 @@ public class PredicateExpressionTest
     [DataRow("NOT, False", true, DisplayName = "NOT operation with False value")]
     [DataRow("=, 42, 24", false, DisplayName = "= operation with different values")]
     [DataRow("=, 42, 42", true, DisplayName = "= operation with same values")]
+    [DataRow("HasFlag, 181, 8", false, DisplayName = "HasFlag operation that does not has flag")]
+    [DataRow("HasFlag, 181, 5", true, DisplayName = "HasFlag operation that has flag")]
     public void Test_Evaluate(string expression, bool expectedResult)
     {
         // Arrange
@@ -104,6 +106,7 @@ public class PredicateExpressionTest
     [DataRow("=, $var1, 42", "$var2", "42", false, DisplayName ="Variable does not exist")]
     [DataRow("=, $var1, 42", "$var1", "24", false, DisplayName = "Variable is not equal")]
     [DataRow("=, $var1, 42", "$var1", "42", true, DisplayName = "Variable equals")]
+    [DataRow("HasFlag, $var1, 42", "$var1", null, false, DisplayName = "Variable is null")]
     public void Test_Evaluate_WithVariable(string expression, string varName, string varValue, bool expectedResult)
     {
         // Arrange
@@ -115,6 +118,23 @@ public class PredicateExpressionTest
         {
             { varName, varValue }
         });
+
+        // Assert
+        Assert.AreEqual(expectedResult, result);
+    }
+
+    [TestMethod]
+    [TestCategory("Simple predicate")]
+    [DataRow("HasFlag, 181, 8", false, DisplayName = "HasFlag operation that does not has flag")]
+    [DataRow("HasFlag, 181, 5", true, DisplayName = "HasFlag operation that has flag")]
+    public void Test_HasFlag(string expression, bool expectedResult)
+    {
+        // Arrange
+        var engine = new PredicateExpression(expression);
+        engine.Prepare();
+
+        // Act
+        var result = engine.HasFlag(new Dictionary<string, string>());
 
         // Assert
         Assert.AreEqual(expectedResult, result);
