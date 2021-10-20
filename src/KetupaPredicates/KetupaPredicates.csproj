@@ -15,8 +15,9 @@
     <RootNamespace>Trogon.KetupaPredicates</RootNamespace>
     <AssemblyVersion></AssemblyVersion>
     <Description>Parsing library to evaluate text predicates</Description>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <PackageId>Trogon.$(AssemblyName)</PackageId>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
     <LangVersion>10.0</LangVersion>

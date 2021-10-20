@@ -18,6 +18,7 @@
     <Compile Include="..\KetupaPredicates.Tests.MSTest\ExpressionParserTest.cs" Link="ExpressionParserTest.cs" />
     <Compile Include="..\KetupaPredicates.Tests.MSTest\ParserStateTest.cs" Link="ParserStateTest.cs" />
     <Compile Include="..\KetupaPredicates.Tests.MSTest\PredicateExpressionTest.cs" Link="PredicateExpressionTest.cs" />
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\PredicateVariableTest.cs" Link="PredicateVariableTest.cs" />
   </ItemGroup>
 
   <ItemGroup>

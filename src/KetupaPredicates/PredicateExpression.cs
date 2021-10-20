@@ -11,6 +11,7 @@
         private readonly ExpressionParser parser = new ExpressionParser();
         private readonly string expression;
         private Dictionary<int, PredicateExpression> predicateArguments = new Dictionary<int, PredicateExpression>();
+        private Dictionary<int, PredicateVariable> variableArguments = new Dictionary<int, PredicateVariable>();
 
         public PredicateExpression(string expression)
         {
@@ -52,6 +53,12 @@
             while ((nextArgument = parser.GetNextArgument(expression, startIndex)) != string.Empty)
             {
                 var trimmedArgument = nextArgument.Trim();
+                if (parser.IsVariable(trimmedArgument))
+                {
+                    var preparedArgument = new PredicateVariable(trimmedArgument);
+                    preparedArgument.Prepare();
+                    variableArguments.Add(arguments.Count, preparedArgument);
+                }
                 arguments.Add(trimmedArgument);
                 startIndex += nextArgument.Length + 1;
             }
@@ -98,7 +105,7 @@
         /// <returns>True if predicate is logicaly true, otherwise False</returns>
         public bool Evaluate()
         {
-            var variables = new Dictionary<string, string>();
+            var variables = new Dictionary<string, object>();
             return Evaluate(variables);
         }
 
@@ -107,7 +114,7 @@
         /// </summary>
         /// <param name="variables">Dictionary with variables</param>
         /// <returns>True if predicate is logicaly true, otherwise False</returns>
-        public bool Evaluate(IDictionary<string, string> variables)
+        public bool Evaluate(IDictionary<string, object> variables)
         {
             if (!IsPrepared)
             {
@@ -119,14 +126,14 @@
 #if NET5_0_OR_GREATER
                 return Operation switch
                 {
-                    "NOT" => !string.Equals(GetAgrumentValue(0, variables), $"{true}", StringComparison.InvariantCultureIgnoreCase),
+                    "NOT" => !string.Equals(GetAgrumentValue(0, variables)?.ToString(), $"{true}", StringComparison.InvariantCultureIgnoreCase),
                     _ => false,
                 };
 #else
                 switch (Operation)
                 {
                     case "NOT":
-                        return !string.Equals(GetAgrumentValue(0, variables), $"{true}", StringComparison.InvariantCultureIgnoreCase);
+                        return !string.Equals(GetAgrumentValue(0, variables)?.ToString(), $"{true}", StringComparison.InvariantCultureIgnoreCase);
                     default:
                         return false;
                 }
@@ -138,9 +145,9 @@
 #if NET5_0_OR_GREATER
                 return Operation switch
                 {
-                    "=" => GetAgrumentValue(0, variables) == GetAgrumentValue(1, variables),
-                    "OR" => GetAgrumentValue(0, variables) == $"{true}" || GetAgrumentValue(1, variables) == $"{true}",
-                    "AND" => GetAgrumentValue(0, variables) == $"{true}" && GetAgrumentValue(1, variables) == $"{true}",
+                    "=" => GetAgrumentValue(0, variables)?.ToString()?.Equals(GetAgrumentValue(1, variables)?.ToString()) == true,
+                    "OR" => $"{true}".Equals(GetAgrumentValue(0, variables)) || $"{true}".Equals(GetAgrumentValue(1, variables)),
+                    "AND" => $"{true}".Equals(GetAgrumentValue(0, variables)) && $"{true}".Equals(GetAgrumentValue(1, variables)),
                     "HasFlag" => HasFlag(variables),
                     _ => false,
                 };
@@ -148,11 +155,11 @@
                 switch (Operation)
                 {
                     case "=":
-                        return GetAgrumentValue(0, variables) == GetAgrumentValue(1, variables);
+                        return GetAgrumentValue(0, variables)?.ToString()?.Equals(GetAgrumentValue(1, variables)?.ToString()) == true;
                     case "OR":
-                        return GetAgrumentValue(0, variables) == $"{true}" || GetAgrumentValue(1, variables) == $"{true}";
+                        return $"{true}".Equals(GetAgrumentValue(0, variables)) || $"{true}".Equals(GetAgrumentValue(1, variables));
                     case "AND":
-                        return GetAgrumentValue(0, variables) == $"{true}" && GetAgrumentValue(1, variables) == $"{true}";
+                        return $"{true}".Equals(GetAgrumentValue(0, variables)) && $"{true}".Equals(GetAgrumentValue(1, variables));
                     case "HasFlag":
                         return HasFlag(variables);
                     default:
@@ -171,17 +178,17 @@
         /// <param name="variables">Provided variables</param>
         /// <returns>Variable value as <see cref="string"/></returns>
 #if NET5_0_OR_GREATER
-        public string? GetAgrumentValue(int index, IDictionary<string, string> variables)
+        public object? GetAgrumentValue(int index, IDictionary<string, object> variables)
 #else
-        public string GetAgrumentValue(int index, IDictionary<string, string> variables)
+        public object GetAgrumentValue(int index, IDictionary<string, object> variables)
 #endif
         {
             var argument = Arguments?[index];
             if (argument != null)
             {
-                if (parser.IsVariable(argument) && variables.ContainsKey(argument))
+                if (parser.IsVariable(argument) && variableArguments.ContainsKey(index))
                 {
-                    return variables[argument];
+                    return variableArguments[index].GetValue(variables);
                 }
                 else if (parser.IsExpression(argument) && predicateArguments.ContainsKey(index))
                 {
@@ -198,11 +205,11 @@
         /// </summary>
         /// <param name="variables">Provided variables</param>
         /// <returns>True if has flag, otherwise False</returns>
-        public bool HasFlag(IDictionary<string, string> variables)
+        public bool HasFlag(IDictionary<string, object> variables)
         {
             var valA = GetAgrumentValue(0, variables);
             var valB = GetAgrumentValue(1, variables);
-            if (int.TryParse(valA, out int enumA) && int.TryParse(valB, out int enumB))
+            if (int.TryParse(valA?.ToString(), out int enumA) && int.TryParse(valB?.ToString(), out int enumB))
             {
                 return (enumA & enumB) == enumB;
             }
