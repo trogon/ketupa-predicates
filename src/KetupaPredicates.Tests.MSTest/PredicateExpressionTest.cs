@@ -147,16 +147,58 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
 
         [TestMethod]
         [TestCategory("Simple predicate")]
-        [DataRow("HasFlag, 181, 8", false, DisplayName = "HasFlag operation that does not has flag")]
-        [DataRow("HasFlag, 181, 5", true, DisplayName = "HasFlag operation that has flag")]
-        public void Test_HasFlag(string expression, bool expectedResult)
+        [DataRow("AND, False, False", false, DisplayName = "AND that A=false, B=false => false")]
+        [DataRow("AND, False, True", false, DisplayName = "AND that A=false, B=true => false")]
+        [DataRow("AND, True, False", false, DisplayName = "AND that A=true, B=false => false")]
+        [DataRow("AND, True, True", true, DisplayName = "AND that A=true, B=true => true")]
+        [DataRow("AND, True, True, True, True", true, DisplayName = "OR that all True => true")]
+        [DataRow("AND, True, True, True, False", false, DisplayName = "OR that last one is False => false")]
+        public void Test_EvaluateAnd(string expression, bool expectedResult)
         {
             // Arrange
             var engine = new PredicateExpression(expression);
             engine.Prepare();
 
             // Act
-            var result = engine.HasFlag(new Dictionary<string, object>());
+            var result = engine.EvaluateAnd(new Dictionary<string, object>());
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        [TestCategory("Simple predicate")]
+        [DataRow("OR, False, False", false, DisplayName = "OR that A=false, B=false => false")]
+        [DataRow("OR, False, True", true, DisplayName = "OR that A=false, B=true => true")]
+        [DataRow("OR, True, False", true, DisplayName = "OR that A=true, B=false => true")]
+        [DataRow("OR, True, True", true, DisplayName = "OR that A=true, B=true => true")]
+        [DataRow("OR, False, False, False, False", false, DisplayName = "OR that all False => false")]
+        [DataRow("OR, False, False, False, True", true, DisplayName = "OR that last one is True => true")]
+        public void Test_EvaluateOr(string expression, bool expectedResult)
+        {
+            // Arrange
+            var engine = new PredicateExpression(expression);
+            engine.Prepare();
+
+            // Act
+            var result = engine.EvaluateOr(new Dictionary<string, object>());
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        [TestCategory("Simple predicate")]
+        [DataRow("HasFlag, 181, 8", false, DisplayName = "HasFlag operation that does not has flag")]
+        [DataRow("HasFlag, 181, 5", true, DisplayName = "HasFlag operation that has flag")]
+        public void Test_EvaluateHasFlag(string expression, bool expectedResult)
+        {
+            // Arrange
+            var engine = new PredicateExpression(expression);
+            engine.Prepare();
+
+            // Act
+            var result = engine.EvaluateHasFlag(new Dictionary<string, object>());
 
             // Assert
             Assert.AreEqual(expectedResult, result);
@@ -168,14 +210,14 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         [DataRow("HasFlag, 181, $var1", "5", true, DisplayName = "(String) HasFlag operation that has flag")]
         [DataRow("HasFlag, 181, $var1", 8, false, DisplayName = "(Integer) HasFlag operation that does not has flag")]
         [DataRow("HasFlag, 181, $var1", 5, true, DisplayName = "(Integer) HasFlag operation that has flag")]
-        public void Test_HasFlag_WithVariable(string expression, object varValue, bool expectedResult)
+        public void Test_EvaluateHasFlag_WithVariable(string expression, object varValue, bool expectedResult)
         {
             // Arrange
             var engine = new PredicateExpression(expression);
             engine.Prepare();
 
             // Act
-            var result = engine.HasFlag(new Dictionary<string, object>()
+            var result = engine.EvaluateHasFlag(new Dictionary<string, object>()
             {
                 { "var1", varValue }
             });

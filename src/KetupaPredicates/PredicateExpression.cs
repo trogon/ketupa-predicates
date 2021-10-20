@@ -13,17 +13,36 @@
         private Dictionary<int, PredicateExpression> predicateArguments = new Dictionary<int, PredicateExpression>();
         private Dictionary<int, PredicateVariable> variableArguments = new Dictionary<int, PredicateVariable>();
 
+        /// <summary>
+        /// Constructs <see cref="PredicateExpression"/>
+        /// </summary>
+        /// <param name="expression">Text representation of predicate</param>
         public PredicateExpression(string expression)
         {
             this.expression = parser.TrimExpression(expression);
         }
 
+        /// <summary>
+        /// Is prepared for evaluation
+        /// </summary>
         public bool IsPrepared { get; private set; }
 #if NET5_0_OR_GREATER
+        /// <summary>
+        /// Operation name
+        /// </summary>
         public string? Operation { get; private set; }
+        /// <summary>
+        /// Operation arguments in text format
+        /// </summary>
         public IReadOnlyList<string>? Arguments { get; private set; }
 #else
+        /// <summary>
+        /// Operation name
+        /// </summary>
         public string Operation { get; private set; }
+        /// <summary>
+        /// Operation arguments in text format
+        /// </summary>
         public IReadOnlyList<string> Arguments { get; private set; }
 #endif
 
@@ -146,9 +165,9 @@
                 return Operation switch
                 {
                     "=" => GetAgrumentValue(0, variables)?.ToString()?.Equals(GetAgrumentValue(1, variables)?.ToString()) == true,
-                    "OR" => $"{true}".Equals(GetAgrumentValue(0, variables)) || $"{true}".Equals(GetAgrumentValue(1, variables)),
-                    "AND" => $"{true}".Equals(GetAgrumentValue(0, variables)) && $"{true}".Equals(GetAgrumentValue(1, variables)),
-                    "HasFlag" => HasFlag(variables),
+                    "OR" => EvaluateOr(variables),
+                    "AND" => EvaluateAnd(variables),
+                    "HasFlag" => EvaluateHasFlag(variables),
                     _ => false,
                 };
 #else
@@ -157,15 +176,100 @@
                     case "=":
                         return GetAgrumentValue(0, variables)?.ToString()?.Equals(GetAgrumentValue(1, variables)?.ToString()) == true;
                     case "OR":
-                        return $"{true}".Equals(GetAgrumentValue(0, variables)) || $"{true}".Equals(GetAgrumentValue(1, variables));
+                        return EvaluateOr(variables);
                     case "AND":
-                        return $"{true}".Equals(GetAgrumentValue(0, variables)) && $"{true}".Equals(GetAgrumentValue(1, variables));
+                        return EvaluateAnd(variables);
                     case "HasFlag":
-                        return HasFlag(variables);
+                        return EvaluateHasFlag(variables);
                     default:
                         return false;
                 }
 #endif
+            }
+
+            if (Arguments?.Count > 2)
+            {
+#if NET5_0_OR_GREATER
+                return Operation switch
+                {
+                    "OR" => EvaluateOr(variables),
+                    "AND" => EvaluateAnd(variables),
+                    _ => false,
+                };
+#else
+                switch (Operation)
+                {
+                    case "OR":
+                        return EvaluateOr(variables);
+                    case "AND":
+                        return EvaluateAnd(variables);
+                    default:
+                        return false;
+                }
+#endif
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if all arguments are True
+        /// </summary>
+        /// <param name="variables">Provided variables</param>
+        /// <returns>True if all arguments are true, otherwise False</returns>
+        public bool EvaluateAnd(IDictionary<string, object> variables)
+        {
+            if (Arguments == null || Arguments.Count == 0)
+            {
+                return true;
+            }
+
+            for (int i = 0; i < Arguments.Count; i++)
+            {
+                if ($"{false}".Equals(GetAgrumentValue(i, variables)))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Checks if first argument has flag indicated by second argument
+        /// </summary>
+        /// <param name="variables">Provided variables</param>
+        /// <returns>True if has flag, otherwise False</returns>
+        public bool EvaluateHasFlag(IDictionary<string, object> variables)
+        {
+            var valA = GetAgrumentValue(0, variables);
+            var valB = GetAgrumentValue(1, variables);
+            if (int.TryParse(valA?.ToString(), out int enumA) && int.TryParse(valB?.ToString(), out int enumB))
+            {
+                return (enumA & enumB) == enumB;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if any argument is True
+        /// </summary>
+        /// <param name="variables">Provided variables</param>
+        /// <returns>True if any argument is true, otherwise False</returns>
+        public bool EvaluateOr(IDictionary<string, object> variables)
+        {
+            if (Arguments == null || Arguments.Count == 0)
+            {
+                return true;
+            }
+
+            for (int i = 0; i < Arguments.Count; i++)
+            {
+                if ($"{true}".Equals(GetAgrumentValue(i, variables)))
+                {
+                    return true;
+                }
             }
 
             return false;
@@ -198,23 +302,6 @@
             }
 
             return argument;
-        }
-
-        /// <summary>
-        /// Checks if first argument has flag indicated by second argument
-        /// </summary>
-        /// <param name="variables">Provided variables</param>
-        /// <returns>True if has flag, otherwise False</returns>
-        public bool HasFlag(IDictionary<string, object> variables)
-        {
-            var valA = GetAgrumentValue(0, variables);
-            var valB = GetAgrumentValue(1, variables);
-            if (int.TryParse(valA?.ToString(), out int enumA) && int.TryParse(valB?.ToString(), out int enumB))
-            {
-                return (enumA & enumB) == enumB;
-            }
-
-            return false;
         }
     }
 }

@@ -3,22 +3,44 @@
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Predicate variable representation
+    /// </summary>
     public class PredicateVariable
     {
         private readonly ExpressionParser parser = new ExpressionParser();
         private readonly string expression;
 
+        /// <summary>
+        /// Constructs <see cref="PredicateVariable"/>
+        /// </summary>
+        /// <param name="expression">Text representation of variable</param>
         public PredicateVariable(string expression)
         {
             this.expression = expression;
         }
 
+        /// <summary>
+        /// Is prepared for evaluation
+        /// </summary>
         public bool IsPrepared { get; private set; }
 #if NET5_0_OR_GREATER
+        /// <summary>
+        /// Variable name
+        /// </summary>
         public string? Name { get; private set; }
+        /// <summary>
+        /// Array variable index
+        /// </summary>
         public IReadOnlyList<int>? Indices { get; private set; }
 #else
+        /// <summary>
+        /// Variable name
+        /// </summary>
         public string Name { get; private set; }
+        /// <summary>
+        /// Array variable index
+        /// </summary>
         public IReadOnlyList<int> Indices { get; private set; }
 #endif
 
