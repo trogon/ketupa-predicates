@@ -213,10 +213,10 @@
         }
 
         /// <summary>
-        /// 
+        /// Checks if all arguments are True
         /// </summary>
-        /// <param name="variables"></param>
-        /// <returns></returns>
+        /// <param name="variables">Provided variables</param>
+        /// <returns>True if all arguments are true, otherwise False</returns>
         public bool EvaluateAnd(IDictionary<string, object> variables)
         {
             if (Arguments == null || Arguments.Count == 0)
@@ -253,10 +253,10 @@
         }
 
         /// <summary>
-        /// 
+        /// Checks if any argument is True
         /// </summary>
-        /// <param name="variables"></param>
-        /// <returns></returns>
+        /// <param name="variables">Provided variables</param>
+        /// <returns>True if any argument is true, otherwise False</returns>
         public bool EvaluateOr(IDictionary<string, object> variables)
         {
             if (Arguments == null || Arguments.Count == 0)
