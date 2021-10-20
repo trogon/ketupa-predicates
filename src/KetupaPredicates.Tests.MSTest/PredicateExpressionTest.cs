@@ -103,10 +103,10 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
 
         [TestMethod]
         [TestCategory("Simple predicate")]
-        [DataRow("=, $var1, 42", "$var2", "42", false, DisplayName = "Variable does not exist")]
-        [DataRow("=, $var1, 42", "$var1", "24", false, DisplayName = "Variable is not equal")]
-        [DataRow("=, $var1, 42", "$var1", "42", true, DisplayName = "Variable equals")]
-        [DataRow("HasFlag, $var1, 42", "$var1", null, false, DisplayName = "Variable is null")]
+        [DataRow("=, $var1, 42", "var2", "42", false, DisplayName = "Variable does not exist")]
+        [DataRow("=, $var1, 42", "var1", "24", false, DisplayName = "Variable is not equal")]
+        [DataRow("=, $var1, 42", "var1", "42", true, DisplayName = "Variable equals")]
+        [DataRow("HasFlag, $var1, 42", "var1", null, false, DisplayName = "Variable is null")]
         public void Test_Evaluate_WithVariable(string expression, string varName, string varValue, bool expectedResult)
         {
             // Arrange
@@ -114,13 +114,35 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             engine.Prepare();
 
             // Act
-            var result = engine.Evaluate(new Dictionary<string, string>
-        {
-            { varName, varValue }
-        });
+            var result = engine.Evaluate(new Dictionary<string, object>
+            {
+                { varName, varValue }
+            });
 
             // Assert
             Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        [TestCategory("Simple predicate")]
+        [DataRow(true, DisplayName = "Boolean type")]
+        [DataRow(135, DisplayName = "Integer type")]
+        [DataRow(4.2, DisplayName = "Double type")]
+        [DataRow("Example", DisplayName = "String type")]
+        public void Test_Evaluate_WithVariable_NonStingType(object varValue)
+        {
+            // Arrange
+            var engine = new PredicateExpression($"=, $var1, {varValue}");
+            engine.Prepare();
+
+            // Act
+            var result = engine.Evaluate(new Dictionary<string, object>
+            {
+                { "var1", varValue }
+            });
+
+            // Assert
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
@@ -134,7 +156,29 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             engine.Prepare();
 
             // Act
-            var result = engine.HasFlag(new Dictionary<string, string>());
+            var result = engine.HasFlag(new Dictionary<string, object>());
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        [TestCategory("Simple predicate")]
+        [DataRow("HasFlag, 181, $var1", "8", false, DisplayName = "(String) HasFlag operation that does not has flag")]
+        [DataRow("HasFlag, 181, $var1", "5", true, DisplayName = "(String) HasFlag operation that has flag")]
+        [DataRow("HasFlag, 181, $var1", 8, false, DisplayName = "(Integer) HasFlag operation that does not has flag")]
+        [DataRow("HasFlag, 181, $var1", 5, true, DisplayName = "(Integer) HasFlag operation that has flag")]
+        public void Test_HasFlag_WithVariable(string expression, object varValue, bool expectedResult)
+        {
+            // Arrange
+            var engine = new PredicateExpression(expression);
+            engine.Prepare();
+
+            // Act
+            var result = engine.HasFlag(new Dictionary<string, object>()
+            {
+                { "var1", varValue }
+            });
 
             // Assert
             Assert.AreEqual(expectedResult, result);
@@ -227,9 +271,9 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
 
         [TestMethod]
         [TestCategory("Complex predicate")]
-        [DataRow("=,  {=, $var1, 42}, {=, 24, 24}", "$var2", "42", false, DisplayName = "Variable does not exist")]
-        [DataRow("OR, {=, 42, $var1}, {=, 52,11 }", "$var1", "24", false, DisplayName = "Variable is not equal")]
-        [DataRow("AND,{=, $var1, 42}, {=, 24, 24}", "$var1", "42", true, DisplayName = "Variable equals")]
+        [DataRow("=,  {=, $var1, 42}, {=, 24, 24}", "var2", "42", false, DisplayName = "Variable does not exist")]
+        [DataRow("OR, {=, 42, $var1}, {=, 52,11 }", "var1", "24", false, DisplayName = "Variable is not equal")]
+        [DataRow("AND,{=, $var1, 42}, {=, 24, 24}", "var1", "42", true, DisplayName = "Variable equals")]
         public void Test_Evaluate_ComplexWithVariable(string expression, string varName, string varValue, bool expectedResult)
         {
             // Arrange
@@ -237,10 +281,10 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             engine.Prepare();
 
             // Act
-            var result = engine.Evaluate(new Dictionary<string, string>
-        {
-            { varName, varValue }
-        });
+            var result = engine.Evaluate(new Dictionary<string, object>
+            {
+                { varName, varValue }
+            });
 
             // Assert
             Assert.AreEqual(expectedResult, result);

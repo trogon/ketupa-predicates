@@ -9,6 +9,8 @@
         ArgumentSeparator = 1,
         PredicateStart = 2,
         PredicateEnd = 3,
-        Variable = 4
+        Variable = 4,
+        IndexStart = 5,
+        IndexEnd = 6
     }
 }

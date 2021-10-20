@@ -1,5 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-var exampleVariables = new Dictionary<string, string>
+var exampleVariables = new Dictionary<string, object>
 {
     { "$test", "42" }
 };

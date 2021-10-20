@@ -52,6 +52,43 @@
         }
 
         /// <summary>
+        /// Gets next index of variable, starting from specified index
+        /// </summary>
+        /// <param name="variable">Text representation of variable</param>
+        /// <param name="startIndex">Begining of the index</param>
+        /// <returns>Value of index, or empty if end of string</returns>
+        public string GetNextIndex(string variable, int startIndex)
+        {
+            if (startIndex >= variable.Length)
+            {
+                return string.Empty;
+            }
+
+            int index = startIndex;
+            if (GetVariableToken(variable[startIndex]) == Token.IndexStart)
+            {
+                startIndex++;
+                index++;
+            }
+
+            while (index < variable.Length)
+            {
+                var token = GetVariableToken(variable[index]);
+                if (token == Token.IndexEnd)
+                {
+                    break;
+                }
+                index++;
+            }
+
+#if NET5_0_OR_GREATER
+            return variable[startIndex..index];
+#else
+            return variable.Substring(startIndex, index - startIndex);
+#endif
+        }
+
+        /// <summary>
         /// Gets token of character
         /// </summary>
         /// <param name="symbol">Current character</param>
@@ -85,6 +122,67 @@
         }
 
         /// <summary>
+        /// Gets token of character for variable context
+        /// </summary>
+        /// <param name="symbol">Current character</param>
+        /// <returns>Token of current character</returns>
+        public Token GetVariableToken(char symbol)
+        {
+#if NET5_0_OR_GREATER
+            return symbol switch
+            {
+                '[' => Token.IndexStart,
+                ']' => Token.IndexEnd,
+                '$' => Token.Variable,
+                _ => Token.None,
+            };
+#else
+            switch (symbol)
+            {
+                case '[':
+                    return Token.IndexStart;
+                case ']':
+                    return Token.IndexEnd;
+                case '$':
+                    return Token.Variable;
+                default:
+                    return Token.None;
+            }
+#endif
+        }
+
+        /// <summary>
+        /// Gets variable name, excluding $ symbol and array indications
+        /// </summary>
+        /// <param name="variable">Text representation of variable</param>
+        /// <returns>Name of variable</returns>
+        public string GetVariableName(string variable)
+        {
+            if (IsVariable(variable))
+            {
+                var indexStarts = variable.IndexOf('[');
+                if (indexStarts > 0)
+                {
+#if NET5_0_OR_GREATER
+                    return variable[1..indexStarts];
+#else
+                    return variable.Substring(1, indexStarts - 1);
+#endif
+                }
+                else
+                {
+#if NET5_0_OR_GREATER
+                    return variable[1..];
+#else
+                    return variable.Substring(1);
+#endif
+                }
+            }
+
+            return variable;
+        }
+
+        /// <summary>
         /// Checks if text is in brackets
         /// </summary>
         /// <param name="text">Text to check</param>
@@ -97,6 +195,27 @@
                 return GetToken(text[0]) == Token.PredicateStart && GetToken(text[^1]) == Token.PredicateEnd;
 #else
                 return GetToken(text[0]) == Token.PredicateStart && GetToken(text[text.Length - 1]) == Token.PredicateEnd;
+#endif
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks if text is an index
+        /// </summary>
+        /// <param name="text">Text to check</param>
+        /// <returns>True if text is an expression, otherwise False</returns>
+        public bool IsIndex(string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+#if NET5_0_OR_GREATER
+                return GetToken(text[0]) == Token.IndexStart && GetToken(text[^1]) == Token.IndexEnd;
+#else
+                return GetToken(text[0]) == Token.IndexStart && GetToken(text[text.Length - 1]) == Token.IndexEnd;
 #endif
             }
             else
