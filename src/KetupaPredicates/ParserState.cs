@@ -27,12 +27,25 @@
         /// <returns>Current bracket level</returns>
         public int GetBracketLevel(Token token, int level)
         {
+#if NET5_0_OR_GREATER
             return token switch
             {
                 Token.PredicateStart => level + 1,
                 Token.PredicateEnd => level - 1,
                 _ => level
             };
+#else
+            switch (token)
+            {
+                case Token.PredicateStart:
+                    return level + 1;
+                case Token.PredicateEnd:
+                    return level - 1;
+                default:
+                    return level;
+            }
+#endif
+
         }
     }
 }

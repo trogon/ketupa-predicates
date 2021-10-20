@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Trogon.KetupaPredicates.Tests.MSTest</RootNamespace>
+    <Nullable>disable</Nullable>
+
+    <IsPackable>false</IsPackable>
+
+    <Company>Trogon Studios</Company>
+
+    <Authors>Maciej Klemarczyk</Authors>
+
+    <Copyright>Copyright (c) 2021 Trogon Studios, Maciej Klemarczyk</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.7" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.7" />
+    <PackageReference Include="coverlet.collector" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KetupaPredicates\KetupaPredicates.csproj" />
+  </ItemGroup>
+
+</Project>
