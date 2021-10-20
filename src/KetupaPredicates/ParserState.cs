@@ -24,6 +24,7 @@
         /// Increments or decrements bracket level
         /// </summary>
         /// <param name="token">Token of current character</param>
+        /// <param name="level">Last bracket level</param>
         /// <returns>Current bracket level</returns>
         public int GetBracketLevel(Token token, int level)
         {
