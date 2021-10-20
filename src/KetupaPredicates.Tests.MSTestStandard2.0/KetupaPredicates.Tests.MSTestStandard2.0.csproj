@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -13,6 +13,12 @@
 
     <Copyright>Copyright (c) 2021 Trogon Studios, Maciej Klemarczyk</Copyright>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\ExpressionParserTest.cs" Link="ExpressionParserTest.cs" />
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\ParserStateTest.cs" Link="ParserStateTest.cs" />
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\PredicateExpressionTest.cs" Link="PredicateExpressionTest.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />

@@ -169,7 +169,7 @@
         [DataRow(simplePredicate, false)]
         [DataRow(complexPredicate, false)]
         [DataRow("{ =, 11, 21}", true)]
-        [DataRow("{OR, {=, 13, 31}, {<, 15, 51} }", true)]
+        [DataRow("{OR, {=,13, 31}, {<,15, 51} }", true)]
         public void Test_IsExpression(string text, bool expectedResult)
         {
             // Arrange

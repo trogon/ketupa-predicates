@@ -15,6 +15,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\ExpressionParserTest.cs" Link="ExpressionParserTest.cs" />
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\ParserStateTest.cs" Link="ParserStateTest.cs" />
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\PredicateExpressionTest.cs" Link="PredicateExpressionTest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.7" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.7" />
