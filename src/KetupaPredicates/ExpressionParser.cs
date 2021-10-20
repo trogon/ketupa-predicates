@@ -25,13 +25,13 @@
         /// <returns>Value of argument, or empty if end of string</returns>
         public string GetNextArgument(string predicate, int startIndex)
         {
-            int index = startIndex;
-            ParserState state = new ParserState();
-
-            if (index > predicate.Length)
+            if (startIndex >= predicate.Length)
             {
                 return string.Empty;
             }
+
+            int index = startIndex;
+            ParserState state = new ParserState();
 
             while (index < predicate.Length)
             {
@@ -44,7 +44,11 @@
                 index++;
             }
 
+#if NET5_0_OR_GREATER
             return predicate[startIndex..index];
+#else
+            return predicate.Substring(startIndex, index - startIndex);
+#endif
         }
 
         /// <summary>
@@ -54,6 +58,7 @@
         /// <returns>Token of current character</returns>
         public Token GetToken(char symbol)
         {
+#if NET5_0_OR_GREATER
             return symbol switch
             {
                 ',' => Token.ArgumentSeparator,
@@ -62,6 +67,21 @@
                 '$' => Token.Variable,
                 _ => Token.None,
             };
+#else
+            switch (symbol)
+            {
+                case ',':
+                    return Token.ArgumentSeparator;
+                case '{':
+                    return Token.PredicateStart;
+                case '}':
+                    return Token.PredicateEnd;
+                case '$':
+                    return Token.Variable;
+                default:
+                    return Token.None;
+            }
+#endif
         }
 
         /// <summary>
@@ -73,7 +93,11 @@
         {
             if (!string.IsNullOrEmpty(text))
             {
+#if NET5_0_OR_GREATER
                 return GetToken(text[0]) == Token.PredicateStart && GetToken(text[^1]) == Token.PredicateEnd;
+#else
+                return GetToken(text[0]) == Token.PredicateStart && GetToken(text[text.Length - 1]) == Token.PredicateEnd;
+#endif
             }
             else
             {
@@ -108,7 +132,11 @@
             var trimmedText = text.Trim();
             if (IsExpression(trimmedText))
             {
+#if NET5_0_OR_GREATER
                 return trimmedText[1..^1].Trim();
+#else
+                return trimmedText.Substring(1, trimmedText.Length - 2).Trim();
+#endif
             }
 
             return text;

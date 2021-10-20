@@ -1,9 +1,8 @@
+namespace Trogon.KetupaPredicates.Tests.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Collections;
 using System.Collections.Generic;
-
-namespace Trogon.KetupaPredicates.Tests.MSTest;
 
 [TestClass]
 public class PredicateExpressionTest
