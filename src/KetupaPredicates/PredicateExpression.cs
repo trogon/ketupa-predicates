@@ -165,6 +165,10 @@
                 return Operation switch
                 {
                     "=" => GetAgrumentValue(0, variables)?.ToString()?.Equals(GetAgrumentValue(1, variables)?.ToString()) == true,
+                    "<" => EvaluateCompare(variables),
+                    ">" => EvaluateCompare(variables),
+                    "<=" => EvaluateCompare(variables),
+                    ">=" => EvaluateCompare(variables),
                     "OR" => EvaluateOr(variables),
                     "AND" => EvaluateAnd(variables),
                     "HasFlag" => EvaluateHasFlag(variables),
@@ -175,6 +179,14 @@
                 {
                     case "=":
                         return GetAgrumentValue(0, variables)?.ToString()?.Equals(GetAgrumentValue(1, variables)?.ToString()) == true;
+                    case "<":
+                        return EvaluateCompare(variables);
+                    case ">":
+                        return EvaluateCompare(variables);
+                    case "<=":
+                        return EvaluateCompare(variables);
+                    case ">=":
+                        return EvaluateCompare(variables);
                     case "OR":
                         return EvaluateOr(variables);
                     case "AND":
@@ -233,6 +245,46 @@
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Checks if first argument has flag indicated by second argument
+        /// </summary>
+        /// <param name="variables">Provided variables</param>
+        /// <returns>True if has flag, otherwise False</returns>
+        public bool EvaluateCompare(IDictionary<string, object> variables)
+        {
+            var valA = GetAgrumentValue(0, variables);
+            var valB = GetAgrumentValue(1, variables);
+            if (long.TryParse(valA?.ToString(), out long numA) && long.TryParse(valB?.ToString(), out long numB))
+            {
+#if NET5_0_OR_GREATER
+                return Operation switch
+                {
+                    "<" => numA < numB,
+                    ">" => numA > numB,
+                    "<=" => numA <= numB,
+                    ">=" => numA >= numB,
+                    _ => false,
+                };
+#else
+                switch (Operation)
+                {
+                    case "<":
+                        return numA < numB;
+                    case ">":
+                        return numA > numB;
+                    case "<=":
+                        return numA <= numB;
+                    case ">=":
+                        return numA >= numB;
+                    default:
+                        return false;
+                }
+#endif
+            }
+
+            return false;
         }
 
         /// <summary>
