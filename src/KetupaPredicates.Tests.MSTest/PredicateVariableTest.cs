@@ -67,6 +67,49 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
 
         [TestMethod]
         [TestCategory("Array variable")]
+        [DataRow("$var1[0][0]", "var1", "42", "42", DisplayName = "Index exists")]
+        [DataRow("$var1[0][-1]", "var1", "42", null, DisplayName = "Negative index")]
+        [DataRow("$var1[0][1]", "var1", "42", null, DisplayName = "Index out of range")]
+        public void Test_GetValue_FromNestedArray(string expression, string varName, string varValue, string expectedValue)
+        {
+            // Arrange
+            var engine = new PredicateVariable(expression);
+            engine.Prepare();
+
+            // Act
+            var value = engine.GetValue(new Dictionary<string, object>
+            {
+                { varName, new [] { new[] { varValue } } }
+            });
+
+            // Assert
+            Assert.AreEqual(expectedValue, value);
+        }
+
+        [TestMethod]
+        [TestCategory("Array variable")]
+        [DataRow("$var1[2]", "var1", 9, 0L, DisplayName = "Binary index 0")]
+        [DataRow("$var1[2]", "var1", 13, 1L, DisplayName = "Binary index 1")]
+        [DataRow("$var1[-1]", "var1", 13, null, DisplayName = "Negative index")]
+        [DataRow("$var1[64]", "var1", 13, null, DisplayName = "Index out of range")]
+        public void Test_GetValue_BinaryFromInteger(string expression, string varName, int varValue, long? expectedValue)
+        {
+            // Arrange
+            var engine = new PredicateVariable(expression);
+            engine.Prepare();
+
+            // Act
+            var value = engine.GetValue(new Dictionary<string, object>
+            {
+                { varName, varValue }
+            });
+
+            // Assert
+            Assert.AreEqual(expectedValue, value);
+        }
+
+        [TestMethod]
+        [TestCategory("Array variable")]
         [DataRow(true, true, DisplayName = "Boolean type")]
         [DataRow(135, 135, DisplayName = "Integer type")]
         [DataRow(4.2, 4.2, DisplayName = "Double type")]
