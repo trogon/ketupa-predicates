@@ -254,6 +254,28 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         }
 
         [TestMethod]
+        [TestCategory("Simple predicate")]
+        [DataRow("IN, hello, complexText", false, DisplayName = "Text B does not contain A => false")]
+        [DataRow("IN, plexT, complexText", true, DisplayName = "Text B contains A => true")]
+        [DataRow("IN, complexText, plexT", false, DisplayName = "Text A contains B => false")]
+        [DataRow("IN, hello, hello", true, DisplayName = "Text B equals A => true")]
+        [DataRow("IN, , hello", true, DisplayName = "Empty text B contains A => true")]
+        [DataRow("IN, hello, ", false, DisplayName = "Empty text A contains B => false")]
+        [DataRow("IN, , ", true, DisplayName = "Empty text B equals A => true")]
+        public void Test_EvaluateIn(string expression, bool expectedResult)
+        {
+            // Arrange
+            var engine = new PredicateExpression(expression);
+            engine.Prepare();
+
+            // Act
+            var result = engine.EvaluateIn(new Dictionary<string, object>());
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
         [TestCategory("Complex predicate")]
         public void Test_Prepare_IsPrepared()
         {
