@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
 
     /// <summary>
     /// Predicate variable representation
@@ -57,17 +58,27 @@
         {
             if (!string.IsNullOrEmpty(Name) && variables.ContainsKey(Name))
             {
-                if (Indices != null && variables[Name] is IList<object> arrayValue)
+                object boxedVariable = variables[Name];
+                if (Indices != null)
                 {
-                    if (Indices.Count > 0 && Indices[0] >= 0 && Indices[0] < arrayValue.Count)
+                    foreach (var index in Indices)
                     {
-                        return arrayValue[Indices[0]];
+                        if (index >= 0 && boxedVariable is IList<object> arrayValue && index < arrayValue.Count)
+                        {
+                            boxedVariable = arrayValue[index];
+                        }
+                        else if (index >= 0 && boxedVariable is IConvertible convertable && index < 64)
+                        {
+                            boxedVariable = (convertable.ToInt64(CultureInfo.InvariantCulture) >> index) & 1;
+                        }
+                        else
+                        {
+                            return null;
+                        }
                     }
                 }
-                else
-                {
-                    return variables[Name];
-                }
+
+                return boxedVariable;
             }
 
             return null;
