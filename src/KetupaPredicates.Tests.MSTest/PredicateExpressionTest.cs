@@ -147,6 +147,33 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
 
         [TestMethod]
         [TestCategory("Simple predicate")]
+        [DataRow("<, 24, 42", true, DisplayName = "< operation that a < b => true")]
+        [DataRow("<, 42, 24", false, DisplayName = "< operation that a > b => false")]
+        [DataRow("<, 42, 42", false, DisplayName = "< operation that a = b => false")]
+        [DataRow(">, 24, 42", false, DisplayName = "> operation that a < b => false")]
+        [DataRow(">, 42, 24", true, DisplayName = "> operation that a > b => true")]
+        [DataRow(">, 42, 42", false, DisplayName = "> operation that a = b => false")]
+        [DataRow("<=, 24, 42", true, DisplayName = "<= operation that a < b => true")]
+        [DataRow("<=, 42, 24", false, DisplayName = "<= operation that a > b => false")]
+        [DataRow("<=, 42, 42", true, DisplayName = "<= operation that a = b => true")]
+        [DataRow(">=, 24, 42", false, DisplayName = ">= operation that a < b => false")]
+        [DataRow(">=, 42, 24", true, DisplayName = ">= operation that a > b => true")]
+        [DataRow(">=, 42, 42", true, DisplayName = ">= operation that a = b => true")]
+        public void Test_EvaluateCompare(string expression, bool expectedResult)
+        {
+            // Arrange
+            var engine = new PredicateExpression(expression);
+            engine.Prepare();
+
+            // Act
+            var result = engine.EvaluateCompare(new Dictionary<string, object>());
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        [TestCategory("Simple predicate")]
         [DataRow("AND, False, False", false, DisplayName = "AND that A=false, B=false => false")]
         [DataRow("AND, False, True", false, DisplayName = "AND that A=false, B=true => false")]
         [DataRow("AND, True, False", false, DisplayName = "AND that A=true, B=false => false")]
