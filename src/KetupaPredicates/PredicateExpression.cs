@@ -192,6 +192,8 @@
                         return EvaluateOr(variables);
                     case "AND":
                         return EvaluateAnd(variables);
+                    case "IN":
+                        return EvaluateIn(variables);
                     case "HasFlag":
                         return EvaluateHasFlag(variables);
                     default:
