@@ -248,10 +248,10 @@
         }
 
         /// <summary>
-        /// Checks if first argument has flag indicated by second argument
+        /// Checks if comparison of two number arguments is true
         /// </summary>
         /// <param name="variables">Provided variables</param>
-        /// <returns>True if has flag, otherwise False</returns>
+        /// <returns>True arguments are numbers and comparison is true, otherwise False</returns>
         public bool EvaluateCompare(IDictionary<string, object> variables)
         {
             var valA = GetAgrumentValue(0, variables);
