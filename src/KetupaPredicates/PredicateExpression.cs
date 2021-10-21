@@ -171,6 +171,7 @@
                     ">=" => EvaluateCompare(variables),
                     "OR" => EvaluateOr(variables),
                     "AND" => EvaluateAnd(variables),
+                    "IN" => EvaluateIn(variables),
                     "HasFlag" => EvaluateHasFlag(variables),
                     _ => false,
                 };
@@ -191,6 +192,8 @@
                         return EvaluateOr(variables);
                     case "AND":
                         return EvaluateAnd(variables);
+                    case "IN":
+                        return EvaluateIn(variables);
                     case "HasFlag":
                         return EvaluateHasFlag(variables);
                     default:
@@ -302,6 +305,19 @@
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Checks if right argument text contains left argument text
+        /// </summary>
+        /// <param name="variables">Provided variables</param>
+        /// <returns>True if all arguments are true, otherwise False</returns>
+        public bool EvaluateIn(IDictionary<string, object> variables)
+        {
+            var valA = GetAgrumentValue(0, variables)?.ToString() ?? string.Empty;
+            var valB = GetAgrumentValue(1, variables)?.ToString() ?? string.Empty;
+
+            return valB.Contains(valA);
         }
 
         /// <summary>

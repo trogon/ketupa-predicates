@@ -88,6 +88,13 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         [DataRow("=, 42, 42", true, DisplayName = "= operation with same values")]
         [DataRow("HasFlag, 181, 8", false, DisplayName = "HasFlag operation that does not has flag")]
         [DataRow("HasFlag, 181, 5", true, DisplayName = "HasFlag operation that has flag")]
+        [DataRow("IN, hello, complexText", false, DisplayName = "Text B does not contain A => false")]
+        [DataRow("IN, plexT, complexText", true, DisplayName = "Text B contains A => true")]
+        [DataRow("IN, complexText, plexT", false, DisplayName = "Text A contains B => false")]
+        [DataRow("IN, hello, hello", true, DisplayName = "Text B equals A => true")]
+        [DataRow("IN, , hello", true, DisplayName = "Empty text B contains A => true")]
+        [DataRow("IN, hello, ", false, DisplayName = "Empty text A contains B => false")]
+        [DataRow("IN, , ", true, DisplayName = "Empty text B equals A => true")]
         public void Test_Evaluate(string expression, bool expectedResult)
         {
             // Arrange
@@ -248,6 +255,28 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             {
                 { "var1", varValue }
             });
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        [TestCategory("Simple predicate")]
+        [DataRow("IN, hello, complexText", false, DisplayName = "Text B does not contain A => false")]
+        [DataRow("IN, plexT, complexText", true, DisplayName = "Text B contains A => true")]
+        [DataRow("IN, complexText, plexT", false, DisplayName = "Text A contains B => false")]
+        [DataRow("IN, hello, hello", true, DisplayName = "Text B equals A => true")]
+        [DataRow("IN, , hello", true, DisplayName = "Empty text B contains A => true")]
+        [DataRow("IN, hello, ", false, DisplayName = "Empty text A contains B => false")]
+        [DataRow("IN, , ", true, DisplayName = "Empty text B equals A => true")]
+        public void Test_EvaluateIn(string expression, bool expectedResult)
+        {
+            // Arrange
+            var engine = new PredicateExpression(expression);
+            engine.Prepare();
+
+            // Act
+            var result = engine.EvaluateIn(new Dictionary<string, object>());
 
             // Assert
             Assert.AreEqual(expectedResult, result);
