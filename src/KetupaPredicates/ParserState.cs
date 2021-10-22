@@ -11,6 +11,11 @@
         public int BracketLevel { get; private set; }
 
         /// <summary>
+        /// Last processed token
+        /// </summary>
+        public Token LastToken { get; private set; }
+
+        /// <summary>
         /// Updates state
         /// </summary>
         /// <param name="token">Token of current character</param>
@@ -18,6 +23,7 @@
         public void Update(Token token)
         {
             BracketLevel = GetBracketLevel(token, BracketLevel);
+            LastToken = token;
         }
 
         /// <summary>
@@ -28,6 +34,11 @@
         /// <returns>Current bracket level</returns>
         public int GetBracketLevel(Token token, int level)
         {
+            if (LastToken == Token.TokenEscape)
+            {
+                return level;
+            }
+
 #if NET5_0_OR_GREATER
             return token switch
             {

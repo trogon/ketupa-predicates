@@ -38,6 +38,11 @@
         /// <summary>
         /// Index end bracket
         /// </summary>
-        IndexEnd = 6
+        IndexEnd = 6,
+
+        /// <summary>
+        /// Token escape symbol
+        /// </summary>
+        TokenEscape = 7
     }
 }
