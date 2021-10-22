@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
     /// <summary>
@@ -330,9 +331,17 @@
         public bool EvaluateIn(IDictionary<string, object> variables)
         {
             var valA = GetAgrumentValue(0, variables)?.ToString() ?? string.Empty;
-            var valB = GetAgrumentValue(1, variables)?.ToString() ?? string.Empty;
+            var argB = GetAgrumentValue(1, variables);
 
-            return valB.Contains(valA);
+            if (argB is IEnumerable<string> textArray)
+            {
+                return textArray.Contains(valA);
+            }
+            else
+            {
+                var valB = argB?.ToString() ?? string.Empty; 
+                return valB.Contains(valA);
+            }
         }
 
         /// <summary>

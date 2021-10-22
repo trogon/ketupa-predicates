@@ -284,6 +284,29 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         }
 
         [TestMethod]
+        [TestCategory("Simple predicate")]
+        [DataRow("IN, tEa, $var1", true, DisplayName = "Text A is in B => true")]
+        [DataRow("IN, 42, $var1", true, DisplayName = "Number A is in B => true")]
+        [DataRow("IN, caffe, $var1", false, DisplayName = "Text A is not in B => false")]
+        [DataRow("IN, , $var1", true, DisplayName = "Empty text A is in B => true")]
+        [DataRow("IN, $var1, tEa", false, DisplayName = "A is an array instead of B => false")]
+        public void Test_EvaluateIn_ArrayVariable(string expression, bool expectedResult)
+        {
+            // Arrange
+            var engine = new PredicateExpression(expression);
+            engine.Prepare();
+
+            // Act
+            var result = engine.EvaluateIn(new Dictionary<string, object>()
+            {
+                { "var1", new [] { "Hello", "tEa", string.Empty, "42" } }
+            });
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
         [TestCategory("Complex predicate")]
         public void Test_Prepare_IsPrepared()
         {
