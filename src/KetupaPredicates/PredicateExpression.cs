@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Text;
 
     /// <summary>
     /// Predicate expression representation
@@ -78,12 +79,26 @@
                     preparedArgument.Prepare();
                     variableArguments.Add(arguments.Count, preparedArgument);
                 }
+                else
+                {
+                    var stringBuilder = new StringBuilder();
+                    var escapeTokens = 0;
+                    for (int i = 0; i < trimmedArgument.Length; i++)
+                    {
+                        var token = parser.GetToken(trimmedArgument[i]);
+                        escapeTokens += (token == Token.TokenEscape) ? 1 : -escapeTokens;
+                        if (escapeTokens % 2 == 0)
+                        {
+                            stringBuilder.Append(trimmedArgument[i]);
+                        }
+                    }
+                    trimmedArgument = stringBuilder.ToString();
+                }
                 arguments.Add(trimmedArgument);
                 startIndex += nextArgument.Length + 1;
             }
 
             Arguments = arguments;
-
             IsPrepared = true;
         }
 

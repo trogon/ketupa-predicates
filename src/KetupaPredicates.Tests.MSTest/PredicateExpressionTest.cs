@@ -113,6 +113,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         [DataRow("=, $var1, 42", "var2", "42", false, DisplayName = "Variable does not exist")]
         [DataRow("=, $var1, 42", "var1", "24", false, DisplayName = "Variable is not equal")]
         [DataRow("=, $var1, 42", "var1", "42", true, DisplayName = "Variable equals")]
+        [DataRow("=, $var1, 4\\{\\}$\\,\\\\2", "var1", "4{}$,\\2", true, DisplayName = "Variable equals with token escape")]
         [DataRow("HasFlag, $var1, 42", "var1", null, false, DisplayName = "Variable is null")]
         public void Test_Evaluate_WithVariable(string expression, string varName, string varValue, bool expectedResult)
         {

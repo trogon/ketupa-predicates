@@ -36,8 +36,9 @@
             while (index < predicate.Length)
             {
                 var token = GetToken(predicate[index]);
+                var lastToken = state.LastToken;
                 state.Update(token);
-                if (token == Token.ArgumentSeparator && state.BracketLevel == 0)
+                if (lastToken != Token.TokenEscape && token == Token.ArgumentSeparator && state.BracketLevel == 0)
                 {
                     break;
                 }
@@ -102,6 +103,7 @@
                 '{' => Token.PredicateStart,
                 '}' => Token.PredicateEnd,
                 '$' => Token.Variable,
+                '\\' => Token.TokenEscape,
                 _ => Token.None,
             };
 #else
@@ -115,6 +117,8 @@
                     return Token.PredicateEnd;
                 case '$':
                     return Token.Variable;
+                case '\\':
+                    return Token.TokenEscape;
                 default:
                     return Token.None;
             }
@@ -134,6 +138,7 @@
                 '[' => Token.IndexStart,
                 ']' => Token.IndexEnd,
                 '$' => Token.Variable,
+                '\\' => Token.TokenEscape,
                 _ => Token.None,
             };
 #else
@@ -145,6 +150,8 @@
                     return Token.IndexEnd;
                 case '$':
                     return Token.Variable;
+                case '\\':
+                    return Token.TokenEscape;
                 default:
                     return Token.None;
             }
