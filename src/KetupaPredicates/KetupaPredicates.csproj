@@ -15,7 +15,7 @@
     <RootNamespace>Trogon.KetupaPredicates</RootNamespace>
     <AssemblyVersion></AssemblyVersion>
     <Description>Parsing library to evaluate text predicates</Description>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <PackageId>Trogon.$(AssemblyName)</PackageId>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
