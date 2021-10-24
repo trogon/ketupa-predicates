@@ -91,10 +91,9 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         [DataRow("IN, hello, complexText", false, DisplayName = "Text B does not contain A => false")]
         [DataRow("IN, plexT, complexText", true, DisplayName = "Text B contains A => true")]
         [DataRow("IN, complexText, plexT", false, DisplayName = "Text A contains B => false")]
-        [DataRow("IN, hello, hello", true, DisplayName = "Text B equals A => true")]
-        [DataRow("IN, , hello", true, DisplayName = "Empty text B contains A => true")]
-        [DataRow("IN, hello, ", false, DisplayName = "Empty text A contains B => false")]
-        [DataRow("IN, , ", true, DisplayName = "Empty text B equals A => true")]
+        [DataRow(@"Matches, he89o, [\\d]+", true, DisplayName = "Matches 'he89o' with numbers => true")]
+        [DataRow(@"Matches, he89o, ^[\\d]+$", false, DisplayName = "Matches 'he89o' with only numbers => false")]
+        [DataRow(@"Matches, 01283, ^[\\d]+$", true, DisplayName = "Matches '01283' with only numbers => true")]
         public void Test_Evaluate(string expression, bool expectedResult)
         {
             // Arrange
@@ -301,6 +300,33 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             {
                 { "var1", new [] { "Hello", "tEa", string.Empty, "42" } }
             });
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        [TestCategory("Simple predicate")]
+        [DataRow(@"Matches, he89o, [\\d]+", true, DisplayName = "Matches 'he89o' with numbers => true")]
+        [DataRow(@"Matches, he89o, ^[\\d]+$", false, DisplayName = "Matches 'he89o' with only numbers => false")]
+        [DataRow(@"Matches, 01283, ^[\\d]+$", true, DisplayName = "Matches '01283' with only numbers => true")]
+        [DataRow(@"Matches, earth, ^[a-z]+$", true, DisplayName = "Matches 'Earth' with only lower letters => true")]
+        [DataRow(@"Matches, Earth, ^[A-Z]", true, DisplayName = "Matches '01283' starts with capital letter => true")]
+        [DataRow("Matches, hello, complexText", false, DisplayName = "Text A does not contain B => false")]
+        [DataRow("Matches, plexT, complexText", false, DisplayName = "Text B contains A => false")]
+        [DataRow("Matches, complexText, plexT", true, DisplayName = "Text A contains B => true")]
+        [DataRow("Matches, hello, hello", true, DisplayName = "Text B equals A => true")]
+        [DataRow("Matches, , hello", false, DisplayName = "Empty text B contains A => false")]
+        [DataRow("Matches, hello, ", true, DisplayName = "Empty text A contains B => true")]
+        [DataRow("Matches, , ", true, DisplayName = "Empty text B equals A => true")]
+        public void Test_EvaluateRegexMatches(string expression, bool expectedResult)
+        {
+            // Arrange
+            var engine = new PredicateExpression(expression);
+            engine.Prepare();
+
+            // Act
+            var result = engine.EvaluateRegexMatches(new Dictionary<string, object>());
 
             // Assert
             Assert.AreEqual(expectedResult, result);

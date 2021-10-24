@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Predicate expression representation
@@ -189,6 +190,7 @@
                     "AND" => EvaluateAnd(variables),
                     "IN" => EvaluateIn(variables),
                     "HasFlag" => EvaluateHasFlag(variables),
+                    "Matches" => EvaluateRegexMatches(variables),
                     _ => false,
                 };
 #else
@@ -212,6 +214,8 @@
                         return EvaluateIn(variables);
                     case "HasFlag":
                         return EvaluateHasFlag(variables);
+                    case "Matches":
+                        return EvaluateRegexMatches(variables);
                     default:
                         return false;
                 }
@@ -321,6 +325,19 @@
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Checks if first argument matches second argument pattern
+        /// </summary>
+        /// <param name="variables">Provided variables</param>
+        /// <returns>True if input matches pattern, otherwise False</returns>
+        public bool EvaluateRegexMatches(IDictionary<string, object> variables)
+        {
+            var valA = GetAgrumentValue(0, variables)?.ToString() ?? string.Empty;
+            var valB = GetAgrumentValue(1, variables)?.ToString() ?? string.Empty;
+
+            return Regex.IsMatch(valA, valB);
         }
 
         /// <summary>
