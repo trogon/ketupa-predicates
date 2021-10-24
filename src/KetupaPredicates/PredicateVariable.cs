@@ -9,7 +9,6 @@
     /// </summary>
     public class PredicateVariable
     {
-        private readonly ExpressionParser parser = new ExpressionParser();
         private readonly string expression;
 
         /// <summary>
@@ -87,7 +86,7 @@
         /// <summary>
         /// Prepares the predicate tree before it is ready to evaluate
         /// </summary>
-        public void Prepare()
+        public void Prepare(ExpressionParser parser)
         {
             var arguments = new List<int>();
 

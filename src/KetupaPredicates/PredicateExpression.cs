@@ -78,7 +78,7 @@
                 if (parser.IsVariable(trimmedArgument))
                 {
                     var preparedArgument = new PredicateVariable(trimmedArgument);
-                    preparedArgument.Prepare();
+                    preparedArgument.Prepare(parser);
                     variableArguments.Add(arguments.Count, preparedArgument);
                 }
                 else

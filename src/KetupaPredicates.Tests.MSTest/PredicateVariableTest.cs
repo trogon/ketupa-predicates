@@ -11,6 +11,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
     {
         private const string simpleVariable = "$variable1";
         private const string arrayVariable = "$array1[21][12]";
+        private readonly ExpressionParser parser = new ExpressionParser();
 
         [TestMethod]
         [TestCategory("Simple variable")]
@@ -32,7 +33,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         {
             // Arrange
             var engine = new PredicateVariable(expression);
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Act
             var value = engine.GetValue(new Dictionary<string, object>
@@ -53,7 +54,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         {
             // Arrange
             var engine = new PredicateVariable(expression);
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Act
             var value = engine.GetValue(new Dictionary<string, object>
@@ -74,7 +75,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         {
             // Arrange
             var engine = new PredicateVariable(expression);
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Act
             var value = engine.GetValue(new Dictionary<string, object>
@@ -96,7 +97,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         {
             // Arrange
             var engine = new PredicateVariable(expression);
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Act
             var value = engine.GetValue(new Dictionary<string, object>
@@ -118,7 +119,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         {
             // Arrange
             var engine = new PredicateVariable("$var1[0]");
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Act
             var value = engine.GetValue(new Dictionary<string, object>
@@ -139,7 +140,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             var variableDict = new Dictionary<string, object>();
             variableDict["var1"] = expectedArray;
             var engine = new PredicateVariable("$var1");
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Act
             var value = engine.GetValue(variableDict);
@@ -156,7 +157,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             var engine = new PredicateVariable(simpleVariable);
 
             // Act
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Assert
             Assert.IsTrue(engine.IsPrepared);
@@ -170,7 +171,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             var engine = new PredicateVariable(simpleVariable);
 
             // Act
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Assert
             Assert.AreEqual("variable1", engine.Name);
@@ -184,7 +185,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             var engine = new PredicateVariable(simpleVariable);
 
             // Act
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Assert
             Assert.IsNull(engine.Indices);
@@ -198,7 +199,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             var engine = new PredicateVariable(arrayVariable);
 
             // Act
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Assert
             Assert.IsTrue(engine.IsPrepared);
@@ -212,7 +213,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             var engine = new PredicateVariable(arrayVariable);
 
             // Act
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Assert
             Assert.AreEqual("array1", engine.Name);
@@ -226,7 +227,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             var engine = new PredicateVariable(arrayVariable);
 
             // Act
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Assert
             Assert.IsNotNull(engine.Indices);
@@ -240,7 +241,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             var engine = new PredicateVariable(arrayVariable);
 
             // Act
-            engine.Prepare();
+            engine.Prepare(parser);
 
             // Assert
             CollectionAssert.AreEqual(new[] { 21, 12 }, engine.Indices as ICollection);
@@ -257,7 +258,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             var engine = new PredicateVariable(expression);
 
             // Act
-            engine.Prepare();
+            engine.Prepare(parser);
         }
     }
 }
