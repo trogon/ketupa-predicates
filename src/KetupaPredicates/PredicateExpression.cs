@@ -46,6 +46,10 @@
         /// </summary>
         public IReadOnlyList<string> Arguments { get; private set; }
 #endif
+        /// <summary>
+        /// Operation arguments in text format
+        /// </summary>
+        public IReadOnlyDictionary<int, IPredicateElement> PredicateElements => predicateElements;
 
         /// <inheritdoc />
 #if NET5_0_OR_GREATER
