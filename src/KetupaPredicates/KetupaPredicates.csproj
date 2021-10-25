@@ -18,6 +18,9 @@
     <Version>1.0.5</Version>
     <PackageId>Trogon.$(AssemblyName)</PackageId>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageProjectUrl>http://trogon.eu/project/trogon%252Fketupa-predicates</PackageProjectUrl>
+    <DebugType>embedded</DebugType>
+    <AssemblyName>Trogon.$(MSBuildProjectName)</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
     <LangVersion>10.0</LangVersion>
@@ -34,10 +37,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <None Include="..\..\LICENSE">
-		  <Pack>True</Pack>
-		  <PackagePath></PackagePath>
-	  </None>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
     <None Include="..\..\README.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
