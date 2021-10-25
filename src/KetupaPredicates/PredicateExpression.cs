@@ -173,13 +173,13 @@
 #if NET5_0_OR_GREATER
                 return Operation switch
                 {
-                    "NOT" => !string.Equals(GetAgrumentValue(0, variables)?.ToString(), $"{true}", StringComparison.InvariantCultureIgnoreCase),
+                    var op when "NOT".Equals(op, StringComparison.OrdinalIgnoreCase) => !string.Equals(GetAgrumentValue(0, variables)?.ToString(), $"{true}", StringComparison.InvariantCultureIgnoreCase),
                     _ => false,
                 };
 #else
                 switch (Operation)
                 {
-                    case "NOT":
+                    case var op when "NOT".Equals(op, StringComparison.OrdinalIgnoreCase):
                         return !string.Equals(GetAgrumentValue(0, variables)?.ToString(), $"{true}", StringComparison.InvariantCultureIgnoreCase);
                     default:
                         return false;
@@ -197,11 +197,11 @@
                     ">" => EvaluateCompare(variables),
                     "<=" => EvaluateCompare(variables),
                     ">=" => EvaluateCompare(variables),
-                    "OR" => EvaluateOr(variables),
-                    "AND" => EvaluateAnd(variables),
-                    "IN" => EvaluateIn(variables),
-                    "HasFlag" => EvaluateHasFlag(variables),
-                    "Matches" => EvaluateRegexMatches(variables),
+                    var op when "OR".Equals(op, StringComparison.OrdinalIgnoreCase) => EvaluateOr(variables),
+                    var op when "AND".Equals(op, StringComparison.OrdinalIgnoreCase) => EvaluateAnd(variables),
+                    var op when "IN".Equals(op, StringComparison.OrdinalIgnoreCase) => EvaluateIn(variables),
+                    var op when "HasFlag".Equals(op, StringComparison.OrdinalIgnoreCase) => EvaluateHasFlag(variables),
+                    var op when "Matches".Equals(op, StringComparison.OrdinalIgnoreCase) => EvaluateRegexMatches(variables),
                     _ => false,
                 };
 #else
@@ -217,15 +217,15 @@
                         return EvaluateCompare(variables);
                     case ">=":
                         return EvaluateCompare(variables);
-                    case "OR":
+                    case var op when "OR".Equals(op, StringComparison.OrdinalIgnoreCase):
                         return EvaluateOr(variables);
-                    case "AND":
+                    case var op when "AND".Equals(op, StringComparison.OrdinalIgnoreCase):
                         return EvaluateAnd(variables);
-                    case "IN":
+                    case var op when "IN".Equals(op, StringComparison.OrdinalIgnoreCase):
                         return EvaluateIn(variables);
-                    case "HasFlag":
+                    case var op when "HasFlag".Equals(op, StringComparison.OrdinalIgnoreCase):
                         return EvaluateHasFlag(variables);
-                    case "Matches":
+                    case var op when "Matches".Equals(op, StringComparison.OrdinalIgnoreCase):
                         return EvaluateRegexMatches(variables);
                     default:
                         return false;
@@ -238,16 +238,16 @@
 #if NET5_0_OR_GREATER
                 return Operation switch
                 {
-                    "OR" => EvaluateOr(variables),
-                    "AND" => EvaluateAnd(variables),
+                    var op when "OR".Equals(op, StringComparison.OrdinalIgnoreCase) => EvaluateOr(variables),
+                    var op when "AND".Equals(op, StringComparison.OrdinalIgnoreCase) => EvaluateAnd(variables),
                     _ => false,
                 };
 #else
                 switch (Operation)
                 {
-                    case "OR":
+                    case var op when "OR".Equals(op, StringComparison.OrdinalIgnoreCase):
                         return EvaluateOr(variables);
-                    case "AND":
+                    case var op when "AND".Equals(op, StringComparison.OrdinalIgnoreCase):
                         return EvaluateAnd(variables);
                     default:
                         return false;
