@@ -9,11 +9,10 @@
     /// <summary>
     /// Predicate expression representation
     /// </summary>
-    public class PredicateExpression
+    public class PredicateExpression : IPredicateElement
     {
         private readonly string expression;
-        private Dictionary<int, PredicateExpression> predicateArguments = new Dictionary<int, PredicateExpression>();
-        private Dictionary<int, PredicateVariable> variableArguments = new Dictionary<int, PredicateVariable>();
+        private Dictionary<int, IPredicateElement> predicateElements = new Dictionary<int, IPredicateElement>();
 
         /// <summary>
         /// Constructs <see cref="PredicateExpression"/>
@@ -48,6 +47,13 @@
         public IReadOnlyList<string> Arguments { get; private set; }
 #endif
 
+        /// <inheritdoc />
+#if NET5_0_OR_GREATER
+        public object? GetValue(IDictionary<string, object> variables) => Evaluate(variables).ToString();
+#else
+        public object GetValue(IDictionary<string, object> variables) => Evaluate(variables).ToString();
+#endif
+
         /// <summary>
         /// Prepares the predicate tree before it is ready to evaluate
         /// </summary>
@@ -80,7 +86,7 @@
                 {
                     var preparedArgument = new PredicateVariable(trimmedArgument);
                     preparedArgument.Prepare(parser);
-                    variableArguments.Add(arguments.Count, preparedArgument);
+                    predicateElements.Add(arguments.Count, preparedArgument);
                 }
                 else
                 {
@@ -128,7 +134,7 @@
                         {
                             var preparedArgument = new PredicateExpression(argument);
                             preparedArgument.PrepareArguments(parser);
-                            predicate.predicateArguments.Add(argumentIndex, preparedArgument);
+                            predicate.predicateElements.Add(argumentIndex, preparedArgument);
                             prepareQueue.Enqueue(preparedArgument);
                         }
                     }
@@ -357,7 +363,7 @@
             }
             else
             {
-                var valB = argB?.ToString() ?? string.Empty; 
+                var valB = argB?.ToString() ?? string.Empty;
                 return valB.Contains(valA);
             }
         }
@@ -397,21 +403,14 @@
         public object GetAgrumentValue(int index, IDictionary<string, object> variables)
 #endif
         {
-            var argument = Arguments?[index];
-            if (argument != null)
+            if (predicateElements.ContainsKey(index))
             {
-                if (variableArguments.ContainsKey(index))
-                {
-                    return variableArguments[index].GetValue(variables);
-                }
-                else if (predicateArguments.ContainsKey(index))
-                {
-                    var value = predicateArguments[index].Evaluate(variables).ToString();
-                    return value;
-                }
+                return predicateElements[index].GetValue(variables);
             }
-
-            return argument;
+            else
+            {
+                return Arguments?[index];
+            }
         }
     }
 }

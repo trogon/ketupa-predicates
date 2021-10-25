@@ -7,7 +7,7 @@
     /// <summary>
     /// Predicate variable representation
     /// </summary>
-    public class PredicateVariable
+    public class PredicateVariable : IPredicateElement
     {
         private readonly string expression;
 
@@ -44,11 +44,7 @@
         public IReadOnlyList<int> Indices { get; private set; }
 #endif
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="variables"></param>
-        /// <returns></returns>
+        /// <inheritdoc />
 #if NET5_0_OR_GREATER
         public object? GetValue(IDictionary<string, object> variables)
 #else
