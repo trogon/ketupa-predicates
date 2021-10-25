@@ -11,7 +11,6 @@
     /// </summary>
     public class PredicateExpression
     {
-        private readonly ExpressionParser parser = new ExpressionParser();
         private readonly string expression;
         private Dictionary<int, PredicateExpression> predicateArguments = new Dictionary<int, PredicateExpression>();
         private Dictionary<int, PredicateVariable> variableArguments = new Dictionary<int, PredicateVariable>();
@@ -22,7 +21,7 @@
         /// <param name="expression">Text representation of predicate</param>
         public PredicateExpression(string expression)
         {
-            this.expression = parser.TrimExpression(expression);
+            this.expression = expression;
         }
 
         /// <summary>
@@ -54,7 +53,8 @@
         /// </summary>
         public void Prepare()
         {
-            PrepareArguments();
+            var parser = new ExpressionParser();
+            PrepareArguments(parser);
             PrepareTree(this, parser);
 
             IsPrepared = true;
@@ -64,15 +64,16 @@
         /// Prepares the predicate before it is ready to evaluate
         /// </summary>
         /// <remarks>Method sutable for simple predicates</remarks>
-        public void PrepareArguments()
+        public void PrepareArguments(ExpressionParser parser)
         {
+            var timmedExpression = parser.TrimExpression(expression);
             var arguments = new List<string>();
-            Operation = parser.GetFirstArgument(expression);
+            Operation = parser.GetFirstArgument(timmedExpression);
 
             int startIndex = Operation.Length + 1;
             string nextArgument;
 
-            while ((nextArgument = parser.GetNextArgument(expression, startIndex)) != string.Empty)
+            while ((nextArgument = parser.GetNextArgument(timmedExpression, startIndex)) != string.Empty)
             {
                 var trimmedArgument = nextArgument.Trim();
                 if (parser.IsVariable(trimmedArgument))
@@ -126,7 +127,7 @@
                         if (parser.IsExpression(argument))
                         {
                             var preparedArgument = new PredicateExpression(argument);
-                            preparedArgument.PrepareArguments();
+                            preparedArgument.PrepareArguments(parser);
                             predicate.predicateArguments.Add(argumentIndex, preparedArgument);
                             prepareQueue.Enqueue(preparedArgument);
                         }
@@ -399,11 +400,11 @@
             var argument = Arguments?[index];
             if (argument != null)
             {
-                if (parser.IsVariable(argument) && variableArguments.ContainsKey(index))
+                if (variableArguments.ContainsKey(index))
                 {
                     return variableArguments[index].GetValue(variables);
                 }
-                else if (parser.IsExpression(argument) && predicateArguments.ContainsKey(index))
+                else if (predicateArguments.ContainsKey(index))
                 {
                     var value = predicateArguments[index].Evaluate(variables).ToString();
                     return value;
