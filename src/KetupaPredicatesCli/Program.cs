@@ -12,25 +12,9 @@ if (expression != null)
 {
     var predicate = new Trogon.KetupaPredicates.PredicateExpression(expression);
     predicate.Prepare();
-    Console.WriteLine("Analysis:");
-    Console.WriteLine($"Expression: {expression}");
-    Console.WriteLine($"\tOperation: {predicate.Operation}");
-    Console.WriteLine($"\tArguments (count {predicate.Arguments?.Count ?? 0}): ");
 
-    int argNumber = 1;
-    if (predicate.Arguments != null)
-    {
-        foreach (var arg in predicate.Arguments)
-        {
-            Console.WriteLine($"\t\tArgument {argNumber++}: {arg}");
-        }
-    }
-
-    Console.WriteLine($"\tVariables:");
-    foreach (var variable in exampleVariables)
-    {
-        Console.WriteLine($"\t\t{variable.Key}={variable.Value}");
-    }
+    new Trogon.KetupaPredicates.Cli.ExpressionPrinter().Print(expression, predicate);
+    new Trogon.KetupaPredicates.Cli.ExpressionPrinter().PrintVariables(exampleVariables);
 
     var result = predicate.Evaluate(exampleVariables);
     Console.WriteLine($"\tEvaluation: {result}");

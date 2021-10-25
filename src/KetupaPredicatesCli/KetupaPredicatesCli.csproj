@@ -18,6 +18,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <DebugType>embedded</DebugType>
+    <RootNamespace>Trogon.KetupaPredicates.Cli</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
