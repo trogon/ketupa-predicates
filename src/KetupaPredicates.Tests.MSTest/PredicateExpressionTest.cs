@@ -423,6 +423,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         [DataRow("=,  {=, $var1, 42}, {=, 24, 24}", "var2", "42", false, DisplayName = "Variable does not exist")]
         [DataRow("OR, {=, 42, $var1}, {=, 52,11 }", "var1", "24", false, DisplayName = "Variable is not equal")]
         [DataRow("AND,{=, $var1, 42}, {=, 24, 24}", "var1", "42", true, DisplayName = "Variable equals")]
+        [DataRow(" AND ,{ = , $var1 , 42  } , { = , 24  , 24 } ", "var1", "42", true, DisplayName = "Variable equals with spaces")]
         public void Test_Evaluate_ComplexWithVariable(string expression, string varName, string varValue, bool expectedResult)
         {
             // Arrange
