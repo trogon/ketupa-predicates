@@ -8,8 +8,8 @@
         public void Print(string expression, PredicateExpression predicate)
         {
             Console.WriteLine("Analysis:");
-            Console.WriteLine($"Expression: {expression}");
-            Console.WriteLine($"\tOperation: {predicate.Operation}");
+            Console.WriteLine($"Expression: [{expression}]");
+            Console.WriteLine($"\tOperation: [{predicate.Operation}]");
             Console.WriteLine($"\tArguments (count {predicate.Arguments?.Count ?? 0}): ");
 
             int argIndex = 0;
@@ -33,7 +33,7 @@
                     }
                     else
                     {
-                        Console.WriteLine($"\t\tArgument {argIndex + 1}: {arg}");
+                        Console.WriteLine($"\t\tArgument {argIndex + 1}: [{arg}]");
                     }
                     argIndex++;
                 }
