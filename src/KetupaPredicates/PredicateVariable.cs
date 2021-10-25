@@ -7,9 +7,8 @@
     /// <summary>
     /// Predicate variable representation
     /// </summary>
-    public class PredicateVariable
+    public class PredicateVariable : IPredicateElement
     {
-        private readonly ExpressionParser parser = new ExpressionParser();
         private readonly string expression;
 
         /// <summary>
@@ -45,11 +44,7 @@
         public IReadOnlyList<int> Indices { get; private set; }
 #endif
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="variables"></param>
-        /// <returns></returns>
+        /// <inheritdoc />
 #if NET5_0_OR_GREATER
         public object? GetValue(IDictionary<string, object> variables)
 #else
@@ -87,7 +82,7 @@
         /// <summary>
         /// Prepares the predicate tree before it is ready to evaluate
         /// </summary>
-        public void Prepare()
+        public void Prepare(ExpressionParser parser)
         {
             var arguments = new List<int>();
 

@@ -10,6 +10,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
     {
         private const string simplePredicate = "=, 11, 21";
         private const string complexPredicate = "OR, {=, 13, 31}, {<, 15, 51}";
+        private readonly ExpressionParser parser = new ExpressionParser();
 
         [TestMethod]
         [TestCategory("Simple predicate")]
@@ -30,7 +31,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             var engine = new PredicateExpression(simplePredicate);
 
             // Act
-            engine.PrepareArguments();
+            engine.PrepareArguments(parser);
 
             // Assert
             Assert.IsTrue(engine.IsPrepared);
@@ -44,7 +45,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             var engine = new PredicateExpression(simplePredicate);
 
             // Act
-            engine.PrepareArguments();
+            engine.PrepareArguments(parser);
 
             // Assert
             Assert.AreEqual("=", engine.Operation);
@@ -58,7 +59,7 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
             var engine = new PredicateExpression(simplePredicate);
 
             // Act
-            engine.PrepareArguments();
+            engine.PrepareArguments(parser);
 
             // Assert
             CollectionAssert.DoesNotContain(engine.Arguments as ICollection, "=");
