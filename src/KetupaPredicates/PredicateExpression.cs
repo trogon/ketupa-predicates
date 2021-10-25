@@ -78,10 +78,10 @@
         {
             var timmedExpression = parser.TrimExpression(expression);
             var arguments = new List<string>();
-            Operation = parser.GetFirstArgument(timmedExpression);
 
-            int startIndex = Operation.Length + 1;
-            string nextArgument;
+            string nextArgument = parser.GetFirstArgument(timmedExpression);
+            int startIndex = nextArgument.Length + 1;
+            Operation = nextArgument.Trim();
 
             while ((nextArgument = parser.GetNextArgument(timmedExpression, startIndex)) != string.Empty)
             {
