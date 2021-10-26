@@ -10,7 +10,7 @@
     <Authors>Maciej Klemarczyk</Authors>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Description>Predicate analytics tool</Description>
     <PackageProjectUrl>http://trogon.eu/project/trogon%252Fketupa-predicates</PackageProjectUrl>
     <RepositoryUrl>https://github.com/trogon/ketupa-predicates</RepositoryUrl>
@@ -19,6 +19,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <DebugType>embedded</DebugType>
     <RootNamespace>Trogon.KetupaPredicates.Cli</RootNamespace>
+    <PackageId>Trogon.$(AssemblyName)</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
