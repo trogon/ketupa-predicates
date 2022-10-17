@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Trogon.KetupaPredicates.Tests.MSTest</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+  
+    <Company>Trogon Studios</Company>
+
+    <Authors>Maciej Klemarczyk</Authors>
+
+    <Copyright>Copyright (c) 2022 Trogon Studios, Maciej Klemarczyk</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\ExpressionParserTest.cs" Link="ExpressionParserTest.cs" />
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\ParserStateTest.cs" Link="ParserStateTest.cs" />
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\PredicateExpressionTest.cs" Link="PredicateExpressionTest.cs" />
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\PredicateVariableTest.cs" Link="PredicateVariableTest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
+    <PackageReference Include="coverlet.collector" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KetupaPredicates\KetupaPredicates.csproj" />
+  </ItemGroup>
+
+</Project>
