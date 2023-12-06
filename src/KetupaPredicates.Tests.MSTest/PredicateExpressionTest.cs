@@ -133,6 +133,29 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
 
         [TestMethod]
         [TestCategory("Simple predicate")]
+        [DataRow("=, $var1, ", "var1", "", true, DisplayName = "Variable equals empty text")]
+        [DataRow("=, , $var1", "var1", "", true, DisplayName = "Empty text equals variable")]
+        [DataRow("=,$var1,", "var1", "", true, DisplayName = "Variable equals empty text (no spaces)")]
+        [DataRow("=,,$var1", "var1", "", true, DisplayName = "Empty text equals variable (no spaces)")]
+        [DataRow("=, $var1, ", "var1", "some", false, DisplayName = "Variable does not equal empty text")]
+        public void Test_Evaluate_WithVariableTextEmpty(string expression, string varName, string varValue, bool expectedResult)
+        {
+            // Arrange
+            var engine = new PredicateExpression(expression);
+            engine.Prepare();
+
+            // Act
+            var result = engine.Evaluate(new Dictionary<string, object>
+            {
+                { varName, varValue }
+            });
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        [TestCategory("Simple predicate")]
         [DataRow(true, DisplayName = "Boolean type")]
         [DataRow(135, DisplayName = "Integer type")]
         [DataRow(4.2, DisplayName = "Double type")]
@@ -425,6 +448,30 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         [DataRow("AND,{=, $var1, 42}, {=, 24, 24}", "var1", "42", true, DisplayName = "Variable equals")]
         [DataRow(" AND ,{ = , $var1 , 42  } , { = , 24  , 24 } ", "var1", "42", true, DisplayName = "Variable equals with spaces")]
         public void Test_Evaluate_ComplexWithVariable(string expression, string varName, string varValue, bool expectedResult)
+        {
+            // Arrange
+            var engine = new PredicateExpression(expression);
+            engine.Prepare();
+
+            // Act
+            var result = engine.Evaluate(new Dictionary<string, object>
+            {
+                { varName, varValue }
+            });
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        [TestCategory("Complex predicate")]
+        [DataRow("=,  {=, , $var1}, {<, 5, 24}", "var1", "", true, DisplayName = "Empty text equals variable with empty text and equals other condition is true")]
+        [DataRow("OR, {=,,$var1}, {>, 5, 24}", "var1", "", true, DisplayName = "Empty text equals variable with empty text and other condition is false")]
+        [DataRow("AND,{=, , $var1}, {<, 5, 24}", "var1", "", true, DisplayName = "Empty text equals variable with empty text and other condition is true")]
+        [DataRow("=,  {=, $var1, }, {<, 5, 24}", "var1", "", true, DisplayName = "Variable with empty text equals empty string and equals other condition is true")]
+        [DataRow("OR, {=, $var1, }, {>, 5, 24}", "var1", "", true, DisplayName = "Variable with empty text equals empty string and other condition is false")]
+        [DataRow("AND,{=, $var1, }, {<, 5, 24}", "var1", "", true, DisplayName = "Variable with empty text equals empty string and other condition is true")]
+        public void Test_Evaluate_ComplexWithVariableEmptyText(string expression, string varName, string varValue, bool expectedResult)
         {
             // Arrange
             var engine = new PredicateExpression(expression);

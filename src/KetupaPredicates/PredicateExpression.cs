@@ -80,11 +80,12 @@
             var arguments = new List<string>();
 
             string nextArgument = parser.GetFirstArgument(timmedExpression);
-            int startIndex = nextArgument.Length + 1;
+            int startIndex = nextArgument.Length;
             Operation = nextArgument.Trim();
 
-            while ((nextArgument = parser.GetNextArgument(timmedExpression, startIndex)) != string.Empty)
+            while (parser.HasMoreArguments(timmedExpression, startIndex))
             {
+                nextArgument = parser.GetNextArgument(timmedExpression, startIndex + 1);
                 var trimmedArgument = nextArgument.Trim();
                 if (parser.IsVariable(trimmedArgument))
                 {

@@ -190,6 +190,27 @@
         }
 
         /// <summary>
+        /// Checks if there is a predicate argument to read, after the specified index.
+        /// </summary>
+        /// <param name="predicate">Text representation of predicate.</param>
+        /// <param name="startIndex">Begining of the argument.</param>
+        /// <returns>True if an argument could be read after start index, otherwise false.</returns>
+        public bool HasMoreArguments(string predicate, int startIndex)
+        {
+            if (startIndex >= predicate.Length)
+            {
+                return false;
+            }
+
+            if (GetToken(predicate[startIndex]) == Token.ArgumentSeparator)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Checks if text is in brackets
         /// </summary>
         /// <param name="text">Text to check</param>
