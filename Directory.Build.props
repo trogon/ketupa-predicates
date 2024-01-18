@@ -1,0 +1,7 @@
+<Project>
+	<PropertyGroup Label="TrogonName">
+		<AssemblyName>Trogon.$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>Trogon.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+</Project>

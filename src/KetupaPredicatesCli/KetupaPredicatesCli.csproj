@@ -1,29 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <Description>Predicate analytics tool</Description>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Copyright>Copyright (c) 2021 Trogon Studios, Maciej Klemarczyk</Copyright>
-    <Company>Trogon Studios</Company>
-    <Authors>Maciej Klemarczyk</Authors>
-    <GenerateDocumentationFile>False</GenerateDocumentationFile>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
-    <Description>Predicate analytics tool</Description>
-    <PackageProjectUrl>http://trogon.eu/project/trogon%252Fketupa-predicates</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/trogon/ketupa-predicates</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
+    <OutputType>Exe</OutputType>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <DebugType>embedded</DebugType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RootNamespace>Trogon.KetupaPredicates.Cli</RootNamespace>
-    <PackageId>Trogon.$(AssemblyName)</PackageId>
+    <TargetFrameworks>net8.0;net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\README.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
