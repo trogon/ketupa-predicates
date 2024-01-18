@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 jobs:
   build:
@@ -25,6 +25,11 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '6.0'
+        include-prerelease: True
+    - name: Setup .NET 8.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '8.0'
         include-prerelease: True
     - name: Restore dependencies
       run: dotnet restore src

@@ -1,26 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net5.0;netstandard2.0</TargetFrameworks>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Company>Trogon Studios</Company>
-    <Authors>Maciej Klemarczyk</Authors>
-    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/trogon/ketupa-predicates</RepositoryUrl>
-    <Copyright>Copyright (c) 2021 Trogon Studios, Maciej Klemarczyk</Copyright>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <RootNamespace>Trogon.KetupaPredicates</RootNamespace>
     <AssemblyVersion></AssemblyVersion>
     <Description>Parsing library to evaluate text predicates</Description>
-    <Version>1.0.5</Version>
-    <PackageId>Trogon.$(AssemblyName)</PackageId>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageProjectUrl>http://trogon.eu/project/trogon%252Fketupa-predicates</PackageProjectUrl>
-    <DebugType>embedded</DebugType>
-    <AssemblyName>Trogon.$(MSBuildProjectName)</AssemblyName>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <TargetFrameworks>net8.0;net6.0;net5.0;netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <LangVersion>10.0</LangVersion>
+    <ImplicitUsings>disabled</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
     <LangVersion>10.0</LangVersion>

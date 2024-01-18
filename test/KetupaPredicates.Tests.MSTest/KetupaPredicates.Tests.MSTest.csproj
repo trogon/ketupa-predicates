@@ -1,17 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>Trogon.KetupaPredicates.Tests.MSTest</RootNamespace>
     <Nullable>enable</Nullable>
-
-    <IsPackable>false</IsPackable>
-
-    <Company>Trogon Studios</Company>
-
-    <Authors>Maciej Klemarczyk</Authors>
-
-    <Copyright>Copyright (c) 2021 Trogon Studios, Maciej Klemarczyk</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KetupaPredicates\KetupaPredicates.csproj" />
+    <ProjectReference Include="..\..\src\KetupaPredicates\KetupaPredicates.csproj" />
   </ItemGroup>
 
 </Project>
