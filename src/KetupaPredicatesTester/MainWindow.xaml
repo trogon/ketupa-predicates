@@ -1,0 +1,109 @@
+﻿<Window x:Class="KetupaPredicatesTester.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KetupaPredicatesTester"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+	<Grid>
+		<Grid.Resources>
+			<ResourceDictionary>
+				<Thickness x:Key="TextLabelMargin">5</Thickness>
+				<Thickness x:Key="ActionButtonPadding">10,3</Thickness>
+				<Thickness x:Key="InputTextPadding">3,5</Thickness>
+				<DataTemplate x:Key="VariableItemTemplate">
+					<TextBlock>
+						<Run Text="{Binding Name, Mode=OneTime}"></Run>
+						<Run>=</Run>
+						<Run Text="{Binding TextValue, Mode=OneTime}"></Run>
+					</TextBlock>
+				</DataTemplate>
+			</ResourceDictionary>
+		</Grid.Resources>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="5*"/>
+			<RowDefinition Height="7*"/>
+			<RowDefinition Height="2*"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0" DataContext="{Binding Configuration, Mode=OneTime}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+			<TextBlock Text="Predicate text" Margin="{DynamicResource TextLabelMargin}"/>
+			<TextBox Grid.Row="1" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
+				 Text="{Binding PredicateText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="3"/>
+		</Grid>
+
+		<GridSplitter Grid.Row="1" 
+					  Grid.ColumnSpan="3" 
+					  HorizontalAlignment="Stretch" 
+					  VerticalAlignment="Top"
+					  ShowsPreview="true"
+					  ResizeDirection="Rows"
+					  Height="3"/>
+
+		<Grid Grid.Row="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="103*"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<TextBlock Grid.Row="0" Margin="{DynamicResource TextLabelMargin}" Text="Variables"/>
+			<ListBox
+				Grid.Row="1"
+				DataContext="{Binding Configuration, Mode=OneTime}"
+				ItemsSource="{Binding Variables, Mode=OneWay}"
+				ItemTemplate="{DynamicResource VariableItemTemplate}" Grid.RowSpan="3"
+				SelectedItem="{Binding SelectedVariable, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+			<StackPanel Grid.Row="2" Orientation="Horizontal">
+				<TextBlock Text="New variable name:" Margin="{DynamicResource TextLabelMargin}" VerticalAlignment="Center"/>
+				<TextBox DataContext="{Binding Configuration, Mode=OneTime}"
+					MinWidth="200"
+					MinHeight="25"
+					Margin="{DynamicResource TextLabelMargin}"
+					Padding="{DynamicResource InputTextPadding}"
+					Text="{Binding VariableName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+				<TextBlock Text="with value:" Margin="{DynamicResource TextLabelMargin}" VerticalAlignment="Center"/>
+				<TextBox DataContext="{Binding Configuration, Mode=OneTime}"
+					MinWidth="200"
+					Margin="{DynamicResource TextLabelMargin}"
+					Padding="{DynamicResource InputTextPadding}"
+					Text="{Binding VariableTextValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+				<Button Content="Add" Margin="{DynamicResource TextLabelMargin}" Padding="{DynamicResource ActionButtonPadding}"
+						Command="{Binding AddVariableCommand}"/>
+				<Button Content="Remove" Margin="{DynamicResource TextLabelMargin}" Padding="{DynamicResource ActionButtonPadding}"
+						Command="{Binding RemoveVariableCommand}"/>
+			</StackPanel>
+		</Grid>
+
+		<GridSplitter Grid.Row="2" 
+					  Grid.ColumnSpan="3" 
+					  HorizontalAlignment="Stretch" 
+					  VerticalAlignment="Top"
+					  ShowsPreview="true"
+					  ResizeDirection="Rows"
+					  Height="3"/>
+
+		<Grid Grid.Row="2">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="103*"/>
+			</Grid.RowDefinitions>
+			<StackPanel Grid.Row="0" Orientation="Horizontal">
+				<TextBlock Margin="{DynamicResource TextLabelMargin}" Text="Result" VerticalAlignment="Center"/>
+				<Button Content="Evaluate" Margin="{DynamicResource TextLabelMargin}" Padding="{DynamicResource ActionButtonPadding}"
+						Command="{Binding EvaluateCommand}"/>
+			</StackPanel>
+			<TextBox
+				Grid.Row="1"
+				DataContext="{Binding Configuration, Mode=OneTime}"
+				Text="{Binding EvaluationResult, Mode=OneWay}"
+				IsReadOnly="True"/>
+		</Grid>
+	</Grid>
+</Window>

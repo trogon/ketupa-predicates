@@ -95,6 +95,12 @@ namespace Trogon.KetupaPredicates.Tests.MSTest
         [DataRow(@"Matches, he89o, [\\d]+", true, DisplayName = "Matches 'he89o' with numbers => true")]
         [DataRow(@"Matches, he89o, ^[\\d]+$", false, DisplayName = "Matches 'he89o' with only numbers => false")]
         [DataRow(@"Matches, 01283, ^[\\d]+$", true, DisplayName = "Matches '01283' with only numbers => true")]
+        [DataRow("StartsWith, he89ro, he", true, DisplayName = "StartsWith 'he89ro' with 'he' => true")]
+        [DataRow("StartsWith, he89ro, e89r", false, DisplayName = "StartsWith 'he89ro' with 'e89r' => false")]
+        [DataRow("StartsWith, he89ro, he89ro", true, DisplayName = "StartsWith 'he89ro' with whole text => true")]
+        [DataRow("EndsWith, he89ro, ro", true, DisplayName = "EndsWith 'he89ro' with 'ro' => true")]
+        [DataRow("EndsWith, he89ro, e89r", false, DisplayName = "EndsWith 'he89ro'' with 'e89r' => false")]
+        [DataRow("EndsWith, he89ro, he89ro", true, DisplayName = "EndsWith 'he89ro' with whole text => true")]
         public void Test_Evaluate(string expression, bool expectedResult)
         {
             // Arrange
