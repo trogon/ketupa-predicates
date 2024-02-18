@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KetupaPredicates", "KetupaP
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{016903F6-5927-4E6C-B549-4E4320661AE1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{B28B6851-7E5D-4D15-9268-37BF9E5264CC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Toolkit", "Toolkit", "{B28B6851-7E5D-4D15-9268-37BF9E5264CC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KetupaPredicatesCli", "KetupaPredicatesCli\KetupaPredicatesCli.csproj", "{6B6EF1B4-4962-44E7-91B6-D91E0457B572}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KetupaPredicates.Tests.MSTest6.0", "..\test\KetupaPredicates.Tests.MSTest6.0\KetupaPredicates.Tests.MSTest6.0.csproj", "{64EC4054-031C-47D1-8E85-FFB5840F853C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KetupaPredicates.Tests.MSTestStandard2.0", "..\test\KetupaPredicates.Tests.MSTestStandard2.0\KetupaPredicates.Tests.MSTestStandard2.0.csproj", "{0D7DBD6A-21F4-464A-9F7A-B9C174504494}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KetupaPredicatesTester", "KetupaPredicatesTester\KetupaPredicatesTester.csproj", "{D94DE1F3-244F-4601-9DF2-C96E66E27907}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{0D7DBD6A-21F4-464A-9F7A-B9C174504494}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D7DBD6A-21F4-464A-9F7A-B9C174504494}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D7DBD6A-21F4-464A-9F7A-B9C174504494}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D94DE1F3-244F-4601-9DF2-C96E66E27907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D94DE1F3-244F-4601-9DF2-C96E66E27907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D94DE1F3-244F-4601-9DF2-C96E66E27907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D94DE1F3-244F-4601-9DF2-C96E66E27907}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{AE298400-A077-45A6-B917-B638D92D481C} = {016903F6-5927-4E6C-B549-4E4320661AE1}
 		{64EC4054-031C-47D1-8E85-FFB5840F853C} = {016903F6-5927-4E6C-B549-4E4320661AE1}
 		{0D7DBD6A-21F4-464A-9F7A-B9C174504494} = {016903F6-5927-4E6C-B549-4E4320661AE1}
+		{D94DE1F3-244F-4601-9DF2-C96E66E27907} = {B28B6851-7E5D-4D15-9268-37BF9E5264CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {91D41C46-D1DB-4EE0-A789-394AB2A462E9}

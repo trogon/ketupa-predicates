@@ -203,6 +203,8 @@
                     var op when "IN".Equals(op, StringComparison.OrdinalIgnoreCase) => EvaluateIn(variables),
                     var op when "HasFlag".Equals(op, StringComparison.OrdinalIgnoreCase) => EvaluateHasFlag(variables),
                     var op when "Matches".Equals(op, StringComparison.OrdinalIgnoreCase) => EvaluateRegexMatches(variables),
+                    var op when "StartsWith".Equals(op, StringComparison.OrdinalIgnoreCase) => EvaluateStartsWith(variables),
+                    var op when "EndsWith".Equals(op, StringComparison.OrdinalIgnoreCase) => EvaluateEndsWith(variables),
                     _ => false,
                 };
 #else
@@ -228,6 +230,10 @@
                         return EvaluateHasFlag(variables);
                     case var op when "Matches".Equals(op, StringComparison.OrdinalIgnoreCase):
                         return EvaluateRegexMatches(variables);
+                    case var op when "StartsWith".Equals(op, StringComparison.OrdinalIgnoreCase):
+                        return EvaluateStartsWith(variables);
+                    case var op when "EndsWith".Equals(op, StringComparison.OrdinalIgnoreCase):
+                        return EvaluateEndsWith(variables);
                     default:
                         return false;
                 }
@@ -323,6 +329,19 @@
         }
 
         /// <summary>
+        /// Checks if first argument ends with second argument text
+        /// </summary>
+        /// <param name="variables">Provided variables</param>
+        /// <returns>True if input ends with text, otherwise False</returns>
+        public bool EvaluateEndsWith(IDictionary<string, object> variables)
+        {
+            var valA = GetAgrumentValue(0, variables)?.ToString() ?? string.Empty;
+            var valB = GetAgrumentValue(1, variables)?.ToString() ?? string.Empty;
+
+            return valA.EndsWith(valB);
+        }
+
+        /// <summary>
         /// Checks if first argument has flag indicated by second argument
         /// </summary>
         /// <param name="variables">Provided variables</param>
@@ -337,19 +356,6 @@
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Checks if first argument matches second argument pattern
-        /// </summary>
-        /// <param name="variables">Provided variables</param>
-        /// <returns>True if input matches pattern, otherwise False</returns>
-        public bool EvaluateRegexMatches(IDictionary<string, object> variables)
-        {
-            var valA = GetAgrumentValue(0, variables)?.ToString() ?? string.Empty;
-            var valB = GetAgrumentValue(1, variables)?.ToString() ?? string.Empty;
-
-            return Regex.IsMatch(valA, valB);
         }
 
         /// <summary>
@@ -394,6 +400,32 @@
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Checks if first argument matches second argument pattern
+        /// </summary>
+        /// <param name="variables">Provided variables</param>
+        /// <returns>True if input matches pattern, otherwise False</returns>
+        public bool EvaluateRegexMatches(IDictionary<string, object> variables)
+        {
+            var valA = GetAgrumentValue(0, variables)?.ToString() ?? string.Empty;
+            var valB = GetAgrumentValue(1, variables)?.ToString() ?? string.Empty;
+
+            return Regex.IsMatch(valA, valB);
+        }
+
+        /// <summary>
+        /// Checks if first argument starts with second argument text
+        /// </summary>
+        /// <param name="variables">Provided variables</param>
+        /// <returns>True if input starts with text, otherwise False</returns>
+        public bool EvaluateStartsWith(IDictionary<string, object> variables)
+        {
+            var valA = GetAgrumentValue(0, variables)?.ToString() ?? string.Empty;
+            var valB = GetAgrumentValue(1, variables)?.ToString() ?? string.Empty;
+
+            return valA.StartsWith(valB);
         }
 
         /// <summary>
