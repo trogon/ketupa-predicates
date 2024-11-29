@@ -6,8 +6,6 @@ Parsing library to evaluate predicates in text format
 [![NuGet](https://img.shields.io/nuget/dt/Trogon.KetupaPredicates?style=for-the-badge)](https://www.nuget.org/packages/Trogon.KetupaPredicates/)
 [![GitHub](https://img.shields.io/github/actions/workflow/status/trogon/ketupa-predicates/.github/workflows/dotnet.yml?style=for-the-badge)](https://github.com/trogon/ketupa-predicates/actions/workflows/dotnet.yml)
 
-https://img.shields.io/github/actions/workflow/status/<user>/<repo>/test.yml?branch=main
-
 ## Installation
 Releases are publish to NuGet.org, you can install it in your project with `nuget` or `dotnet` tool.
 

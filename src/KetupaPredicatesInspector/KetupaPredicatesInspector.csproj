@@ -8,10 +8,15 @@
     <UseWPF>true</UseWPF>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RootNamespace>Trogon.KetupaPredicates.Tester</RootNamespace>
+    <RootNamespace>Trogon.KetupaPredicates.Inspector</RootNamespace>
     <TargetFrameworks>net9.0-windows;net8.0-windows;net6.0-windows</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup Label="Workaround for issue .NET 9 and WPF, bug https://github.com/dotnet/wpf/issues/10068">
+    <AssemblyName>KetupaPredicatesInspector</AssemblyName>
+    <!-- <IncludePackageReferencesDuringMarkupCompilation>false</IncludePackageReferencesDuringMarkupCompilation> makes MVVM package generators not work properly. -->
+  </PropertyGroup>
+  
   <ItemGroup>
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>
@@ -21,6 +26,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
   </ItemGroup>
 
   <ItemGroup>
