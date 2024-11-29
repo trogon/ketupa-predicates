@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KetupaPredicates.Tests.MSTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KetupaPredicatesTester", "KetupaPredicatesTester\KetupaPredicatesTester.csproj", "{D94DE1F3-244F-4601-9DF2-C96E66E27907}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KetupaPredicates.Tests.MSTest8.0", "..\test\KetupaPredicates.Tests.MSTest8.0\KetupaPredicates.Tests.MSTest8.0.csproj", "{BE50668D-4A13-4934-A4C3-193D92E406D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{D94DE1F3-244F-4601-9DF2-C96E66E27907}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D94DE1F3-244F-4601-9DF2-C96E66E27907}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D94DE1F3-244F-4601-9DF2-C96E66E27907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE50668D-4A13-4934-A4C3-193D92E406D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE50668D-4A13-4934-A4C3-193D92E406D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE50668D-4A13-4934-A4C3-193D92E406D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE50668D-4A13-4934-A4C3-193D92E406D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{64EC4054-031C-47D1-8E85-FFB5840F853C} = {016903F6-5927-4E6C-B549-4E4320661AE1}
 		{0D7DBD6A-21F4-464A-9F7A-B9C174504494} = {016903F6-5927-4E6C-B549-4E4320661AE1}
 		{D94DE1F3-244F-4601-9DF2-C96E66E27907} = {B28B6851-7E5D-4D15-9268-37BF9E5264CC}
+		{BE50668D-4A13-4934-A4C3-193D92E406D2} = {016903F6-5927-4E6C-B549-4E4320661AE1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {91D41C46-D1DB-4EE0-A789-394AB2A462E9}
