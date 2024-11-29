@@ -9,7 +9,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RootNamespace>Trogon.KetupaPredicates.Cli</RootNamespace>
-    <TargetFrameworks>net8.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net9.0;net8.0;net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
