@@ -42,6 +42,7 @@
                 Grid.RowSpan="3"
                 AcceptsReturn="True"
                 AcceptsTab="True"
+                FontFamily="Cascadia Mono,Consolas"
                 Text="{Binding PredicateText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 TextWrapping="Wrap" />
         </Grid>
