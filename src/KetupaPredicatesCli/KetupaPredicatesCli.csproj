@@ -12,6 +12,10 @@
     <TargetFrameworks>net9.0;net8.0;net6.0</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup Label="Workaround for issue .NET 9 and WPF, bug https://github.com/dotnet/wpf/issues/10068">
+    <AssemblyName>KetupaPredicatesCli</AssemblyName>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>

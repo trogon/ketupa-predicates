@@ -1,0 +1,181 @@
+﻿<UserControl
+    x:Class="Trogon.KetupaPredicates.Inspector.DesignerFeature.Designer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Trogon.KetupaPredicates.Inspector.DesignerFeature"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="MvvmTreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
+                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                <Setter Property="FontWeight" Value="Normal" />
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+                </Style.Triggers>
+
+            </Style>
+            <Style TargetType="TreeViewItem">
+                <Setter Property="IsExpanded" Value="True" />
+            </Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="4*" />
+        </Grid.ColumnDefinitions>
+        <GroupBox Margin="5,5,5,10" Header="Visual predicate">
+            <TreeView
+                x:Name="predicateTreeView"
+                ItemContainerStyle="{StaticResource MvvmTreeViewItemStyle}"
+                ItemsSource="{Binding Predicate.Arguments, Mode=OneWay}"
+                SelectedItemChanged="TreeView_SelectedItemChanged">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Arguments, Mode=OneWay}">
+                        <TextBlock Text="{Binding DisplayText}" />
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </GroupBox>
+
+        <StackPanel Grid.Column="1" Margin="5,5,5,10">
+            <RadioButton
+                Margin="5,0,0,5"
+                GroupName="Type"
+                IsChecked="{Binding IsOperand, Mode=TwoWay}">
+                Operand
+            </RadioButton>
+            <ComboBox
+                Padding="3"
+                ItemsSource="{Binding AvailableOperands, Mode=OneTime}"
+                SelectedItem="{Binding SelectedOperand, Mode=TwoWay}"
+                SelectionChanged="OperandComboBox_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name, Mode=OneTime}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <RadioButton
+                Margin="5,15,0,5"
+                GroupName="Type"
+                IsChecked="{Binding IsVariable, Mode=TwoWay}">
+                Variable
+            </RadioButton>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="5,0,3,0" VerticalAlignment="Center">$</TextBlock>
+                <ComboBox
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Padding="3"
+                    GotFocus="VariableComboBox_GotFocus"
+                    IsEditable="True"
+                    Text="{Binding VariableName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+            <RadioButton
+                Margin="5,15,0,5"
+                GroupName="Type"
+                IsChecked="{Binding IsConstant, Mode=TwoWay}">
+                Constant
+            </RadioButton>
+            <TextBox
+                Padding="3"
+                GotFocus="ConstantTextBox_GotFocus"
+                Text="{Binding ConstantValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <WrapPanel Margin="5,15,0,0">
+                <Button
+                    Width="120"
+                    Margin="5"
+                    Padding="10,5"
+                    Command="{Binding AppendCommand}"
+                    CommandParameter="{Binding}"
+                    Content="Append"
+                    ToolTip="Append as last parameter of selected operator" />
+                <Button
+                    Width="120"
+                    Margin="5"
+                    Padding="10,5"
+                    Command="{Binding InsertCommand}"
+                    Content="Insert"
+                    ToolTip="Insert before/after selected parameter" />
+                <Button
+                    Width="120"
+                    Margin="5"
+                    Padding="10,5"
+                    Command="{Binding ReplaceCommand}"
+                    Content="Replace"
+                    ToolTip="Replace selected parameter" />
+                <Button
+                    Width="120"
+                    Margin="5"
+                    Padding="10,5"
+                    Command="{Binding DeleteCommand}"
+                    Content="Delete"
+                    ToolTip="Delete selected parameter" />
+            </WrapPanel>
+            <StackPanel>
+                <RadioButton
+                    Margin="3"
+                    GroupName="InsertLocation"
+                    IsChecked="{Binding IsInsertBefore, Mode=TwoWay}">
+                    Insert before
+                </RadioButton>
+                <RadioButton
+                    Margin="3"
+                    GroupName="InsertLocation"
+                    IsChecked="{Binding IsInsertAfter, Mode=TwoWay}">
+                    Insert after
+                </RadioButton>
+                <RadioButton
+                    Margin="3"
+                    GroupName="ReplaceNestedAction"
+                    Visibility="Collapsed">
+                    Keep nested parameters when replaced
+                </RadioButton>
+                <RadioButton
+                    Margin="3"
+                    GroupName="ReplaceNestedAction"
+                    IsChecked="True">
+                    Remove nested parameters when replaced
+                </RadioButton>
+                <RadioButton
+                    Margin="3"
+                    GroupName="DeleteNestedAction"
+                    Visibility="Collapsed">
+                    Flatten nested parameters when deleted
+                </RadioButton>
+                <RadioButton
+                    Margin="3"
+                    GroupName="DeleteNestedAction"
+                    IsChecked="True">
+                    Remove nested parameters when deleted
+                </RadioButton>
+            </StackPanel>
+        </StackPanel>
+
+        <GroupBox
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Margin="5"
+            Header="Predicate text (output)">
+            <TextBox
+                Height="100"
+                IsReadOnly="True"
+                Text="{Binding PredicateText, Mode=OneWay}" />
+        </GroupBox>
+    </Grid>
+</UserControl>

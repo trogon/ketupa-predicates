@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KetupaPredicates.Tests.MSTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KetupaPredicates.Tests.MSTestStandard2.0", "..\test\KetupaPredicates.Tests.MSTestStandard2.0\KetupaPredicates.Tests.MSTestStandard2.0.csproj", "{0D7DBD6A-21F4-464A-9F7A-B9C174504494}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KetupaPredicatesTester", "KetupaPredicatesTester\KetupaPredicatesTester.csproj", "{D94DE1F3-244F-4601-9DF2-C96E66E27907}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KetupaPredicatesInspector", "KetupaPredicatesInspector\KetupaPredicatesInspector.csproj", "{D94DE1F3-244F-4601-9DF2-C96E66E27907}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KetupaPredicates.Tests.MSTest8.0", "..\test\KetupaPredicates.Tests.MSTest8.0\KetupaPredicates.Tests.MSTest8.0.csproj", "{BE50668D-4A13-4934-A4C3-193D92E406D2}"
 EndProject

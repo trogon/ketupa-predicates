@@ -32,6 +32,10 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup Label="Workaround for issue .NET 9 and WPF, bug https://github.com/dotnet/wpf/issues/10068">
+    <AssemblyName>Trogon.KetupaPredicates</AssemblyName>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>
