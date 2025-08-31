@@ -7,10 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <!-- This project will be automatically included when .NET 10 becomes available -->
-  <PropertyGroup Condition="'$(IncludeNet10)' != 'true'">
-    <IsTestProject>false</IsTestProject>
-    <ExcludeFromBuild>true</ExcludeFromBuild>
+  <!-- This project targets .NET 10 -->
+  <PropertyGroup>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>

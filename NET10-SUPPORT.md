@@ -1,31 +1,33 @@
-# .NET 10 Support Instructions
+# .NET 10 Support
 
-This file documents how to enable .NET 10 support once .NET 10 is released.
+This file documents the .NET 10 support in the Ketupa Predicates library.
 
 ## Current Status
-The repository has been prepared for .NET 10 support with conditional MSBuild properties. All target frameworks are conditionally set based on the `IncludeNet10` property.
+.NET 10 support is **enabled by default** in all projects. The library now targets .NET 10.0 (Preview) alongside other supported frameworks.
 
-## Enabling .NET 10 Support
+## Build Requirements
 
 ### Prerequisites
-1. Install .NET 10 SDK when it becomes available
-2. Ensure your development environment supports .NET 10
+1. .NET 10 SDK (Preview 7 or later)
+2. Development environment that supports .NET 10
 
-### Build Commands
+### Standard Build Commands
 
-#### Enable .NET 10 for all projects:
+All standard .NET commands now include .NET 10 support:
+
+#### Build all projects:
 ```bash
-dotnet build -p:IncludeNet10=true
+dotnet build
 ```
 
-#### Test with .NET 10:
+#### Run tests:
 ```bash
-dotnet test -p:IncludeNet10=true
+dotnet test
 ```
 
-#### Restore packages for .NET 10:
+#### Restore packages:
 ```bash
-dotnet restore -p:IncludeNet10=true
+dotnet restore
 ```
 
 ### What Changes When .NET 10 is Enabled
