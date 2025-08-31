@@ -11,6 +11,18 @@ Releases are publish to NuGet.org, you can install it in your project with `nuge
 
 _For more details, Please refer to the [NuGet.org](https://www.nuget.org/packages/Trogon.KetupaPredicates/)_
 
+### Target Framework Support
+The library currently supports the following .NET target frameworks:
+- .NET 8.0
+- .NET 6.0  
+- .NET 5.0
+- .NET Standard 2.0
+
+**Future .NET 10 Support**: The project includes conditional support for .NET 10.0. To enable .NET 10 support when it becomes available, build with the `IncludeNet10=true` property:
+```bash
+dotnet build -p:IncludeNet10=true
+```
+
 ## Usage
 _Please refer to the [Documentation](https://github.com/trogon/ketupa-predicates/wiki)_
 

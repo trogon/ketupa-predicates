@@ -9,7 +9,9 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RootNamespace>Trogon.KetupaPredicates.Cli</RootNamespace>
-    <TargetFrameworks>net8.0;net6.0</TargetFrameworks>
+    <!-- Base target frameworks - net10.0 can be enabled when .NET 10 becomes available -->
+    <TargetFrameworks Condition="'$(IncludeNet10)' != 'true'">net8.0;net6.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IncludeNet10)' == 'true'">net10.0;net8.0;net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>

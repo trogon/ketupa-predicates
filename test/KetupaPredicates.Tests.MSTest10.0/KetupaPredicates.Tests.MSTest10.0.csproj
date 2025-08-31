@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Trogon.KetupaPredicates.Tests.MSTest</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- This project will be automatically included when .NET 10 becomes available -->
+  <PropertyGroup Condition="'$(IncludeNet10)' != 'true'">
+    <IsTestProject>false</IsTestProject>
+    <ExcludeFromBuild>true</ExcludeFromBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\ExpressionParserTest.cs" Link="ExpressionParserTest.cs" />
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\ParserStateTest.cs" Link="ParserStateTest.cs" />
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\PredicateExpressionTest.cs" Link="PredicateExpressionTest.cs" />
+    <Compile Include="..\KetupaPredicates.Tests.MSTest\PredicateVariableTest.cs" Link="PredicateVariableTest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.2.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.2.1" />
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\KetupaPredicates\KetupaPredicates.csproj" />
+  </ItemGroup>
+
+</Project>
