@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31808.319
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11612.153 insiders
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KetupaPredicates", "KetupaPredicates\KetupaPredicates.csproj", "{1A107E58-A46C-4EE6-A5A1-F14D427305CA}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KetupaPredicatesInspector", "KetupaPredicatesInspector\KetupaPredicatesInspector.csproj", "{D94DE1F3-244F-4601-9DF2-C96E66E27907}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KetupaPredicates.Tests.MSTest8.0", "..\test\KetupaPredicates.Tests.MSTest8.0\KetupaPredicates.Tests.MSTest8.0.csproj", "{BE50668D-4A13-4934-A4C3-193D92E406D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KetupaPredicates.Tests.MSTest9.0", "..\test\KetupaPredicates.Tests.MSTest9.0\KetupaPredicates.Tests.MSTest9.0.csproj", "{A28E8B4F-3DD3-F7F2-5093-7843F379B59F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{BE50668D-4A13-4934-A4C3-193D92E406D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE50668D-4A13-4934-A4C3-193D92E406D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE50668D-4A13-4934-A4C3-193D92E406D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A28E8B4F-3DD3-F7F2-5093-7843F379B59F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A28E8B4F-3DD3-F7F2-5093-7843F379B59F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A28E8B4F-3DD3-F7F2-5093-7843F379B59F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A28E8B4F-3DD3-F7F2-5093-7843F379B59F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{0D7DBD6A-21F4-464A-9F7A-B9C174504494} = {016903F6-5927-4E6C-B549-4E4320661AE1}
 		{D94DE1F3-244F-4601-9DF2-C96E66E27907} = {B28B6851-7E5D-4D15-9268-37BF9E5264CC}
 		{BE50668D-4A13-4934-A4C3-193D92E406D2} = {016903F6-5927-4E6C-B549-4E4320661AE1}
+		{A28E8B4F-3DD3-F7F2-5093-7843F379B59F} = {016903F6-5927-4E6C-B549-4E4320661AE1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {91D41C46-D1DB-4EE0-A789-394AB2A462E9}

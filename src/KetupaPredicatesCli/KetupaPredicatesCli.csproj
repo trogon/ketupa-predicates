@@ -9,7 +9,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RootNamespace>Trogon.KetupaPredicates.Cli</RootNamespace>
-    <TargetFrameworks>net9.0;net8.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net10.0;net9.0;net8.0;net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Label="Workaround for issue .NET 9 and WPF, bug https://github.com/dotnet/wpf/issues/10068">

@@ -12,9 +12,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Setup dotnet
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: | 
           3.1.x
@@ -22,9 +22,10 @@ jobs:
           6.0.x
           8.0.x
           9.0.x
+          10.0.x
     - name: Restore dependencies
-      run: dotnet restore src
+      run: dotnet restore src/KetupaPredicates.slnx
     - name: Build
-      run: dotnet build src --no-restore
+      run: dotnet build src/KetupaPredicates.slnx --no-restore
     - name: Test
-      run: dotnet test src --no-build --verbosity normal
+      run: dotnet test src/KetupaPredicates.slnx --no-build --verbosity normal
