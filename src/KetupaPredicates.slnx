@@ -4,6 +4,7 @@
     <Project Path="../test/KetupaPredicates.Tests.MSTest5.0/KetupaPredicates.Tests.MSTest5.0.csproj" />
     <Project Path="../test/KetupaPredicates.Tests.MSTest6.0/KetupaPredicates.Tests.MSTest6.0.csproj" />
     <Project Path="../test/KetupaPredicates.Tests.MSTest8.0/KetupaPredicates.Tests.MSTest8.0.csproj" />
+    <Project Path="../test/KetupaPredicates.Tests.MSTest9.0/KetupaPredicates.Tests.MSTest9.0.csproj" />
     <Project Path="../test/KetupaPredicates.Tests.MSTestStandard2.0/KetupaPredicates.Tests.MSTestStandard2.0.csproj" />
   </Folder>
   <Folder Name="/Toolkit/">
